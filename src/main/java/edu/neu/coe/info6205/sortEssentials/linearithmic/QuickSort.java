@@ -68,7 +68,8 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
         Partition<X> partition = createPartition(xs, from, to);
         if (partitioner == null) throw new RuntimeException("partitioner not set");
         Collection<Partition<X>> partitions = partitioner.partition(partition);
-        partitions.forEach(p -> sort(p.xs, p.from, p.to, depth + 1));
+        partitions.forEach(p ->
+                sort(p.xs, p.from, p.to, depth + 1));
     }
 
     /**

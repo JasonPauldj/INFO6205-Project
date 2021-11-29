@@ -1,5 +1,6 @@
-package edu.neu.coe.info6205.sortWithOutConfig;
+package edu.neu.coe.info6205.sortEssentials;
 
+import edu.neu.coe.info6205.sortEssentials.MSDStringSort;
 import org.junit.Test;
 
 import java.io.IOException;
