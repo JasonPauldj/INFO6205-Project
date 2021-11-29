@@ -1,13 +1,13 @@
 /*
   (c) Copyright 2018, 2019 Phasmid Software
  */
-package edu.neu.coe.info6205.sortWithOutConfig.huskySort;
+package edu.neu.coe.info6205.sortEssentials.huskySort;
 
-import edu.neu.coe.info6205.sortWithOutConfig.HelperFactory;
-import edu.neu.coe.info6205.sortWithOutConfig.helper.SortWithHelper;
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoder;
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoderFactory;
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyHelper;
+import edu.neu.coe.info6205.sortEssentials.BaseHelper;
+import edu.neu.coe.info6205.sortEssentials.SortWithHelper;
+import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
+import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoderFactory;
+import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyHelper;
 import edu.neu.coe.info6205.util.Config;
 import edu.neu.coe.info6205.util.LazyLogger;
 
@@ -52,16 +52,6 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         return xs;
     }
 
-    /**
-     * Sort array xs, making a copy if stipulated by huskyHelper.
-     *
-     * @param xs sort the array xs, returning the sorted result, leaving xs unchanged.
-     * @return the sorted version of xs (or its copy).
-     */
-    @Override
-    public final X[] sort(final X[] xs) {
-        return sort(xs, huskyHelper.isMakeCopy());
-    }
 
     /**
      * Method to get the Helper, but as a HuskyHelper.
@@ -98,11 +88,9 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
      * @param n          number of elements expected.
      * @param huskyCoder coder.
      * @param postSorter post-sorter.
-     * @param config     configuration.
      */
-    protected AbstractHuskySort(final String name, final int n, final HuskyCoder<X> huskyCoder, final Consumer<X[]> postSorter) {
-        this(name, createHelper(name, n, huskyCoder, postSorter,false));
-        closeHelper = true;
+    protected AbstractHuskySort(final String name, final int n, final HuskyCoder<X> huskyCoder, final Consumer<X[]> postSorter, boolean makeCopy) {
+        this(name, createHelper(name, n, huskyCoder, postSorter, makeCopy));
     }
 
     static final HuskyCoder<String> UNICODE_CODER = HuskyCoderFactory.unicodeCoder;
@@ -112,8 +100,9 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
     /**
      * NOTE: callers of this method should consider arranging for the helper to be closed on close of the sorter.
      */
-    private static <Y extends Comparable<Y>> HuskyHelper<Y> createHelper(final String name, final int n, final HuskyCoder<Y> huskyCoder, final Consumer<Y[]> postSorter, final boolean instrumentation) {
-        return instrumentation ? new HuskyHelper<>(HelperFactory.create("Husky Delegate Helper", n), huskyCoder, postSorter, false) : new HuskyHelper<>(name, n, huskyCoder, postSorter);
+    private static <Y extends Comparable<Y>> HuskyHelper<Y> createHelper(final String name, final int n, final HuskyCoder<Y> huskyCoder, final Consumer<Y[]> postSorter, boolean makeCopy) {
+        // return instrumentation ? new HuskyHelper<>(HelperFactory.create("Husky Delegate Helper", n, config), huskyCoder, postSorter, false) : new HuskyHelper<>(name, n, huskyCoder, postSorter);
+        return new HuskyHelper<>(BaseHelper.getHelper(),huskyCoder,postSorter,makeCopy);
     }
 
     protected final HuskyHelper<X> huskyHelper;

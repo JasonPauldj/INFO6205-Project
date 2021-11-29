@@ -1,13 +1,13 @@
 /*
   (c) Copyright 2018, 2019 Phasmid Software
  */
-package edu.neu.coe.info6205.sortWithOutConfig.huskySort;
+package edu.neu.coe.info6205.sort.huskySort;
 
-import edu.neu.coe.info6205.sortWithOutConfig.HelperFactory;
-import edu.neu.coe.info6205.sortWithOutConfig.helper.SortWithHelper;
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoder;
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoderFactory;
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyHelper;
+import edu.neu.coe.info6205.sort.HelperFactory;
+import edu.neu.coe.info6205.sort.SortWithHelper;
+import edu.neu.coe.info6205.sort.huskySortUtils.HuskyCoder;
+import edu.neu.coe.info6205.sort.huskySortUtils.HuskyCoderFactory;
+import edu.neu.coe.info6205.sort.huskySortUtils.HuskyHelper;
 import edu.neu.coe.info6205.util.Config;
 import edu.neu.coe.info6205.util.LazyLogger;
 
@@ -100,8 +100,8 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
      * @param postSorter post-sorter.
      * @param config     configuration.
      */
-    protected AbstractHuskySort(final String name, final int n, final HuskyCoder<X> huskyCoder, final Consumer<X[]> postSorter) {
-        this(name, createHelper(name, n, huskyCoder, postSorter,false));
+    protected AbstractHuskySort(final String name, final int n, final HuskyCoder<X> huskyCoder, final Consumer<X[]> postSorter, final Config config) {
+        this(name, createHelper(name, n, huskyCoder, postSorter, config.isInstrumented(), config));
         closeHelper = true;
     }
 
@@ -112,8 +112,8 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
     /**
      * NOTE: callers of this method should consider arranging for the helper to be closed on close of the sorter.
      */
-    private static <Y extends Comparable<Y>> HuskyHelper<Y> createHelper(final String name, final int n, final HuskyCoder<Y> huskyCoder, final Consumer<Y[]> postSorter, final boolean instrumentation) {
-        return instrumentation ? new HuskyHelper<>(HelperFactory.create("Husky Delegate Helper", n), huskyCoder, postSorter, false) : new HuskyHelper<>(name, n, huskyCoder, postSorter);
+    private static <Y extends Comparable<Y>> HuskyHelper<Y> createHelper(final String name, final int n, final HuskyCoder<Y> huskyCoder, final Consumer<Y[]> postSorter, final boolean instrumentation, final Config config) {
+        return instrumentation ? new HuskyHelper<>(HelperFactory.create("Husky Delegate Helper", n, config), huskyCoder, postSorter, false) : new HuskyHelper<>(name, n, huskyCoder, postSorter);
     }
 
     protected final HuskyHelper<X> huskyHelper;

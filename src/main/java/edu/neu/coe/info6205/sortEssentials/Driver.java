@@ -1,11 +1,11 @@
-package edu.neu.coe.info6205.sortWithOutConfig;
+package edu.neu.coe.info6205.sortEssentials;
 
-import com.sun.xml.internal.bind.v2.model.annotation.Quick;
+import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort_DualPivot;
+import edu.neu.coe.info6205.sortWithOutConfig.TimSort;
 import edu.neu.coe.info6205.sortWithOutConfig.huskySort.QuickHuskySort;
 import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoderFactory;
 import edu.neu.coe.info6205.util.Benchmark;
 
-import java.io.IOException;
 import java.util.Random;
 
 public class Driver {

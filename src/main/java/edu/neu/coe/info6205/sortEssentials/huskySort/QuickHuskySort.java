@@ -1,10 +1,9 @@
 /*
   (c) Copyright 2018, 2019 Phasmid Software
  */
-package edu.neu.coe.info6205.sortWithOutConfig.huskySort;
+package edu.neu.coe.info6205.sortEssentials.huskySort;
 
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoder;
-import edu.neu.coe.info6205.util.Config;
+import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -18,10 +17,9 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * @param n          the number of elements to be sorted (may be 0 if unknown).
      * @param huskyCoder the Husky coder.
      * @param postSorter the post-sorter (i.e. the sort method which will fix any remaining inversions).
-     * @param config     the configuration.
      */
-    public QuickHuskySort(String name, int n, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter) {
-        super(name, n, huskyCoder, postSorter);
+    public QuickHuskySort(String name, int n, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter, boolean makeCopy) {
+        super(name, n, huskyCoder, postSorter, makeCopy);
     }
 
     /**
@@ -31,10 +29,9 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * @param name       the name of the sorter (used for the helper).
      * @param huskyCoder the Husky coder.
      * @param postSorter the post-sorter (i.e. the sort method which will fix any remaining inversions).
-     * @param config     the configuration.
      */
-    public QuickHuskySort(String name, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter) {
-        this(name, 0, huskyCoder, postSorter);
+    public QuickHuskySort(String name, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter, boolean makeCopy) {
+        this(name, 0, huskyCoder, postSorter, makeCopy);
     }
 
     /**
@@ -43,10 +40,9 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * The post-sorter will be the System sort.
      *
      * @param huskyCoder the Husky coder.
-     * @param config     the configuration.
      */
-    public QuickHuskySort(HuskyCoder<X> huskyCoder) {
-        this("QuickHuskySort/System", huskyCoder, Arrays::sort);
+    public QuickHuskySort(HuskyCoder<X> huskyCoder, boolean makeCopy) {
+        this("QuickHuskySort/System", huskyCoder, Arrays::sort, makeCopy);
     }
 
     /**

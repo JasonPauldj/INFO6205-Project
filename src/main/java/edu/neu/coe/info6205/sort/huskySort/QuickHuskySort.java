@@ -1,9 +1,9 @@
 /*
   (c) Copyright 2018, 2019 Phasmid Software
  */
-package edu.neu.coe.info6205.sortWithOutConfig.huskySort;
+package edu.neu.coe.info6205.sort.huskySort;
 
-import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoder;
+import edu.neu.coe.info6205.sort.huskySortUtils.HuskyCoder;
 import edu.neu.coe.info6205.util.Config;
 
 import java.util.Arrays;
@@ -20,8 +20,8 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * @param postSorter the post-sorter (i.e. the sort method which will fix any remaining inversions).
      * @param config     the configuration.
      */
-    public QuickHuskySort(String name, int n, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter) {
-        super(name, n, huskyCoder, postSorter);
+    public QuickHuskySort(String name, int n, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter, Config config) {
+        super(name, n, huskyCoder, postSorter, config);
     }
 
     /**
@@ -33,8 +33,8 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * @param postSorter the post-sorter (i.e. the sort method which will fix any remaining inversions).
      * @param config     the configuration.
      */
-    public QuickHuskySort(String name, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter) {
-        this(name, 0, huskyCoder, postSorter);
+    public QuickHuskySort(String name, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter, Config config) {
+        this(name, 0, huskyCoder, postSorter, config);
     }
 
     /**
@@ -45,8 +45,8 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * @param huskyCoder the Husky coder.
      * @param config     the configuration.
      */
-    public QuickHuskySort(HuskyCoder<X> huskyCoder) {
-        this("QuickHuskySort/System", huskyCoder, Arrays::sort);
+    public QuickHuskySort(HuskyCoder<X> huskyCoder, Config config) {
+        this("QuickHuskySort/System", huskyCoder, Arrays::sort, config);
     }
 
     /**
