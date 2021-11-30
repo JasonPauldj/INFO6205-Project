@@ -29,24 +29,16 @@ public class QuickSortTest {
 
     @Test
     public void testSort1() throws Exception {
-        String[] input = {"267", "223", "15", "139", "219", "293", "167", "281", "188", "71"};
+        String[] input = new String[10];
         Random random = new Random();
-
         QuickSort_DualPivot<String> s = new QuickSort_DualPivot<String>("QuickSort", 10);
-//        for( int i = 0 ; i < 10 ; i++){
-//            int val = random.nextInt(300);
-//            input[i] = String.valueOf(val);
-//        }
-
-
-        System.out.println(Arrays.toString(input));
+        for( int i = 0 ; i < 10 ; i++){
+            int val = random.nextInt(300);
+            input[i] = String.valueOf(val);
+        }
         String[] expected = Arrays.copyOf(input,input.length);
         String[] ans = s.sort(input,false);
         Arrays.sort(expected);
-        System.out.println(Arrays.toString(input));
-        System.out.println(Arrays.toString(ans));
-        System.out.println(Arrays.toString(expected));
-
         assertArrayEquals (expected, ans);
     }
 

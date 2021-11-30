@@ -1,10 +1,11 @@
 package edu.neu.coe.info6205.util;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FileUtil {
@@ -33,4 +34,19 @@ public class FileUtil {
         }
         return null;
     }
+
+    public void writeAsCsv(List<String> lines){
+        try {
+            String result = "";
+            for(String line: lines ){
+                result += line +"\n";
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+            writer.write(result);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
