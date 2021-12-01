@@ -5,6 +5,7 @@ package edu.neu.coe.info6205.sortEssentials.huskySort;
 
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
 
+import java.text.Collator;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -46,6 +47,41 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
     }
 
     /**
+     * Primary constructor to create an implementation of HuskySort which primarily uses Quicksort.
+     *
+     * @param name       the name of the sorter (used for the helper).
+     * @param n          the number of elements to be sorted (may be 0 if unknown).
+     * @param huskyCoder the Husky coder.
+     * @param postSorter the post-sorter (i.e. the sort method which will fix any remaining inversions).
+     */
+    public QuickHuskySort(String name, int n, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter) {
+        super(name, n, huskyCoder, postSorter);
+    }
+
+    /**
+     * Secondary constructor to create an implementation of HuskySort which primarily uses Quicksort.
+     * The number of elements to be sorted is unknown.
+     *
+     * @param name       the name of the sorter (used for the helper).
+     * @param huskyCoder the Husky coder.
+     * @param postSorter the post-sorter (i.e. the sort method which will fix any remaining inversions).
+     */
+    public QuickHuskySort(String name, HuskyCoder<X> huskyCoder, Consumer<X[]> postSorter) {
+        this(name, 0, huskyCoder, postSorter);
+    }
+
+    /**
+     * Secondary constructor to create an implementation of HuskySort which primarily uses Quicksort.
+     * The name will be QuickHuskySort/System.
+     * The post-sorter will be the System sort.
+     *
+     * @param huskyCoder the Husky coder.
+     */
+    public QuickHuskySort(HuskyCoder<X> huskyCoder) {
+        this("QuickHuskySort/System", huskyCoder, Arrays::sort);
+    }
+
+    /**
      * Primary sort method, defined in Sort.
      *
      * @param xs   sort the array xs from "from" to "to".
@@ -54,6 +90,11 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      */
     public void sort(X[] xs, int from, int to) {
         quickSort(xs, getHelper().getLongs(), from, to - 1);
+    }
+
+    @Override
+    public void sort(X[] xs, int from, int to, Collator cl) {
+
     }
 
     // CONSIDER inlining this private method

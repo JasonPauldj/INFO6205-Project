@@ -8,6 +8,7 @@ import edu.neu.coe.info6205.sortEssentials.SortWithHelper;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoderFactory;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyHelper;
+import edu.neu.coe.info6205.sortWithOutConfig.helper.Helper;
 import edu.neu.coe.info6205.util.Config;
 import edu.neu.coe.info6205.util.LazyLogger;
 
@@ -81,6 +82,10 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         huskyHelper.swap(xs, i, j);
     }
 
+    protected AbstractHuskySort(final String name, final int n, final HuskyCoder<X> huskyCoder, final Consumer<X[]> postSorter) {
+        this(name, createHelper(name, n, huskyCoder, postSorter,false));
+        closeHelper = true;
+    }
     /**
      * Constructor for AbstractHuskySort
      *
@@ -108,6 +113,7 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
     protected final HuskyHelper<X> huskyHelper;
     protected final String name;
 
+    protected boolean closeHelper = false;
     private AbstractHuskySort(final String name, final HuskyHelper<X> helper) {
         super(helper);
         this.name = name;

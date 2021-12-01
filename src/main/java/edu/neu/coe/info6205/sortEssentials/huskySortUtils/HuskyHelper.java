@@ -4,6 +4,7 @@ import edu.neu.coe.info6205.sortEssentials.BaseHelper;
 import edu.neu.coe.info6205.sortEssentials.Helper;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.Coding;
 
+import java.text.Collator;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -238,6 +239,11 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
      */
     public int compare(X[] xs, int i, int j) {
         return helper.compare(xs, i, j);
+    }
+
+    @Override
+    public int compare(X[] xs, int i, int j, Collator cl) {
+        return 0;
     }
 
     /**

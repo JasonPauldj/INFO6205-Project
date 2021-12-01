@@ -4,6 +4,7 @@ import edu.neu.coe.info6205.sortEssentials.Helper;
 import edu.neu.coe.info6205.util.Config;
 import edu.neu.coe.info6205.util.Utilities;
 
+import java.text.Collator;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -52,6 +53,11 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
     public int compare(X[] xs, int i, int j) {
         // CONSIDER invoking the other compare signature
         return xs[i].compareTo(xs[j]);
+    }
+
+    @Override
+    public int compare(X[] xs, int i, int j, Collator cl) {
+        return cl.compare(xs[i],xs[j]);
     }
 
     /**

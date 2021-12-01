@@ -6,6 +6,7 @@ package edu.neu.coe.info6205.sortWithOutConfig.huskySort;
 import edu.neu.coe.info6205.sortWithOutConfig.huskySortUtils.HuskyCoder;
 import edu.neu.coe.info6205.util.Config;
 
+import java.text.Collator;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -83,6 +84,11 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
             else i++;
         }
         return new Partition(lt, gt);
+    }
+
+    @Override
+    public void sort(String[] array, int i, int length, Collator instance) {
+
     }
 
     private static class Partition {

@@ -1,5 +1,6 @@
 package edu.neu.coe.info6205.sortEssentials.linearithmic;
 
+import java.text.Collator;
 import java.util.List;
 
 public interface Partitioner<X extends Comparable<X>> {
@@ -10,5 +11,5 @@ public interface Partitioner<X extends Comparable<X>> {
      * @param partition the partition to divide up.
      * @return an array of partitions, whose length depends on the sorting method being used.
      */
-    List<Partition<X>> partition(Partition<X> partition);
+    List<Partition<X>> partition(Partition<X> partition, Collator cl);
 }

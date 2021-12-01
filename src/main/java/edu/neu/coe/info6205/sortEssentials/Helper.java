@@ -1,6 +1,7 @@
 package edu.neu.coe.info6205.sortEssentials;
 
 
+import java.text.Collator;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -58,6 +59,18 @@ public interface Helper<X extends Comparable<X>>  {
      */
     int compare(X[] xs, int i, int j);
 
+
+    /**
+     * Compare elements i and j of xs within the subarray lo..hi
+     *
+     * @param xs the array.
+     * @param i  one of the indices.
+     * @param j  the other index.
+     * @param cl Collator.
+     * @return the result of comparing xs[i] to xs[j]
+     */
+    int compare(X[] xs, int i, int j, Collator cl);
+
     /**
      * Compare values v and w and return true if v is less than w.
      *
@@ -109,6 +122,18 @@ public interface Helper<X extends Comparable<X>>  {
         return result;
     }
 
+    default boolean swapConditional(X[] xs, int i, int j,Collator cl) {
+        final X v = xs[i];
+        final X w = xs[j];
+        boolean result = cl.compare(v,w) > 0;
+        if (result) {
+            // CONSIDER invoking swap
+            xs[i] = w;
+            xs[j] = v;
+        }
+        return result;
+    }
+
     /**
      * Method to perform a stable swap, but only if xs[i] is less than xs[i-1], i.e. out of order.
      *
@@ -120,6 +145,17 @@ public interface Helper<X extends Comparable<X>>  {
         final X v = xs[i];
         final X w = xs[i - 1];
         boolean result = v.compareTo(w) < 0;
+        if (result) {
+            xs[i] = w;
+            xs[i - 1] = v;
+        }
+        return result;
+    }
+
+    default boolean swapStableConditional(X[] xs, int i,Collator cl) {
+        final X v = xs[i];
+        final X w = xs[i - 1];
+        boolean result = cl.compare(v,w) < 0;
         if (result) {
             xs[i] = w;
             xs[i - 1] = v;

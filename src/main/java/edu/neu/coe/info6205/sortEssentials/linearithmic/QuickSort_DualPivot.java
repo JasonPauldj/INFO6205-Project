@@ -2,6 +2,7 @@ package edu.neu.coe.info6205.sortEssentials.linearithmic;
 
 import edu.neu.coe.info6205.sortEssentials.Helper;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
     /**
      * Constructor for QuickSort_3way
      *
-     * @param N      the number elements we expect to sort.
+     * @param N the number elements we expect to sort.
      */
     public QuickSort_DualPivot(int N) {
         this(DESCRIPTION, N);
@@ -36,6 +37,11 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
     @Override
     public Partitioner<X> createPartitioner() {
         return new Partitioner_DualPivot(getHelper());
+    }
+
+    @Override
+    public void sort(X[] xs, int from, int to, Collator cl) {
+
     }
 
     public class Partitioner_DualPivot implements Partitioner<X> {
@@ -50,11 +56,14 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
          * @param partition the partition to divide up.
          * @return an array of partitions, whose length depends on the sorting method being used.
          */
-        public List<Partition<X>> partition(Partition<X> partition) {
+        public List<Partition<X>> partition(Partition<X> partition, Collator cl) {
             final X[] xs = partition.xs;
             final int lo = partition.from;
             final int hi = partition.to - 1;
-            helper.swapConditional(xs, lo, hi);
+            if(cl==null)
+                helper.swapConditional(xs, lo, hi);
+            else
+                helper.swapConditional(xs, lo, hi,cl);
             int lt = lo + 1;
             int gt = hi - 1;
             int i = lt;
@@ -73,9 +82,15 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
             {
                 while (i <= gt) {
                     X x = xs[i];
-                    if (x.compareTo(xs[lo]) < 0) swap(xs, lt++, i++);
-                    else if (x.compareTo(xs[hi]) > 0) swap(xs, i, gt--);
-                    else i++;
+                    if (cl == null) {
+                        if (helper.compare(xs, i, lo) < 0) swap(xs, lt++, i++);
+                        else if (helper.compare(xs, i, hi) > 0) swap(xs, i, gt--);
+                        else i++;
+                    } else {
+                        if (helper.compare(xs, i, lo, cl) < 0) swap(xs, lt++, i++);
+                        else if (helper.compare(xs, i, hi, cl) > 0) swap(xs, i, gt--);
+                        else i++;
+                    }
                 }
                 swap(xs, lo, --lt);
                 swap(xs, hi, ++gt);

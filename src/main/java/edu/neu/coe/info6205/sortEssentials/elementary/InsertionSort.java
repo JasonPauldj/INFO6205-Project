@@ -8,6 +8,8 @@ import edu.neu.coe.info6205.sortEssentials.Helper;
 import edu.neu.coe.info6205.sortEssentials.SortWithHelper;
 import edu.neu.coe.info6205.util.Config;
 
+import java.text.Collator;
+
 public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
     /**
@@ -62,6 +64,19 @@ public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
             }
         }
 
+    }
+
+    @Override
+    public void sort(X[] xs, int from, int to, Collator cl) {
+        final Helper<X> helper = getHelper();
+        for(int i=from+1;i<to;i++){
+            for(int j=i-1;j>=from;j--){
+                if(cl.compare(xs[j],xs[j+1])>0)
+                    helper.swap(xs,j,j+1);
+                else
+                    break;
+            }
+        }
     }
 
     public static final String DESCRIPTION = "Insertion sort";

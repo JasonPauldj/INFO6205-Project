@@ -5,7 +5,9 @@ import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort;
 import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort_DualPivot;
 import org.junit.Test;
 
+import java.text.Collator;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -40,6 +42,16 @@ public class QuickSortTest {
         String[] ans = s.sort(input,false);
         Arrays.sort(expected);
         assertArrayEquals (expected, ans);
+    }
+
+    @Test
+    public  void testSort3(){
+        String[] input = "阿兵 阿安 阿冰冰 阿斌 阿滨 阿冰 阿彬".split(" ");
+        String[] expected = "阿安 阿彬 阿斌 阿滨 阿兵 阿冰 阿冰冰".split(" ");
+        QuickSort_DualPivot<String> s = new QuickSort_DualPivot<String>("QuickSort", 10);
+         s.sort(input,0,input.length,0,Collator.getInstance(Locale.CHINA));
+        Arrays.sort(input, Collator.getInstance(Locale.CHINA));
+        assertArrayEquals(expected, input);
     }
 
 }

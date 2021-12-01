@@ -8,6 +8,8 @@ import edu.neu.coe.info6205.sortWithOutConfig.helper.Helper;
 import edu.neu.coe.info6205.sortWithOutConfig.helper.SortWithHelper;
 import edu.neu.coe.info6205.util.Config;
 
+import java.text.Collator;
+
 public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
     /**
@@ -19,6 +21,11 @@ public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
      */
     protected InsertionSort(String description, int N) {
         super(description, N);
+    }
+
+    @Override
+    public void sort(String[] array, int i, int length, Collator instance) {
+
     }
 
     /**

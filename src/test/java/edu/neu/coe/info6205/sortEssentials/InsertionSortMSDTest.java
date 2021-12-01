@@ -1,9 +1,12 @@
 package edu.neu.coe.info6205.sortEssentials;
 
 import edu.neu.coe.info6205.sortEssentials.InsertionSortMSD;
+import edu.neu.coe.info6205.util.FileUtil;
 import org.junit.Test;
 
+import java.text.Collator;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -50,5 +53,17 @@ public class InsertionSortMSDTest {
 
         InsertionSortMSD.sort(input, 0, input.length, 2);
         assertArrayEquals(expected, input);
+    }
+
+    @Test
+    public void sort3(){
+        FileUtil fu = new FileUtil("/Users/ebby/Desktop/Grad School/PSA/INFO6205-Project/src/main/RandomString/Chinese/shuffledChinese.txt");
+        String[] in = fu.read();
+        FileUtil fo = new FileUtil("/Users/ebby/Desktop/Grad School/PSA/INFO6205-Project/src/main/RandomString/Chinese/sortedChinese.txt");
+        String[] out = fo.read();
+//        String[] input = "阿兵 阿安 阿冰冰 阿斌 阿滨 阿冰 阿彬".split(" ");
+//        String[] expected = "阿安 阿彬 阿斌 阿滨 阿兵 阿冰 阿冰冰".split(" ");
+        Arrays.sort(in, Collator.getInstance(Locale.CHINA));
+        assertArrayEquals(in, out);
     }
 }

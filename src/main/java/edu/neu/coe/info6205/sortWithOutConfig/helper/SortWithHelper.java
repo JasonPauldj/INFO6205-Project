@@ -3,6 +3,8 @@ package edu.neu.coe.info6205.sortWithOutConfig.helper;
 import edu.neu.coe.info6205.sortWithOutConfig.HelperFactory;
 import edu.neu.coe.info6205.sortWithOutConfig.Sort;
 
+import java.text.Collator;
+
 
 /**
  * Base class for Sort with a HelperWithOutConfig.
@@ -75,4 +77,5 @@ public abstract class SortWithHelper<X extends Comparable<X>> implements Sort<X>
     private final Helper<X> Helper;
     protected boolean closeHelper = false;
 
+    public abstract void sort(String[] array, int i, int length, Collator instance);
 }

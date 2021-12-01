@@ -3,6 +3,7 @@
  */
 package edu.neu.coe.info6205.sortEssentials;
 
+import java.text.Collator;
 import java.util.Arrays;
 
 public interface Sort<X> {
@@ -15,6 +16,16 @@ public interface Sort<X> {
      * @param to   the index of the first element not to sort.
      */
     void sort(X[] xs, int from, int to);
+
+    /**
+     * Generic, mutating sort method which operates on a sub-array.
+     *
+     * @param xs   sort the array xs from "from" until "to" (exclusive of to).
+     * @param from the index of the first element to sort.
+     * @param to   the index of the first element not to sort.
+     * @param cl   Collator.
+     */
+    void sort(X[] xs, int from, int to, Collator cl);
 
     /**
      * Method to prepare for sorting, invoked by the default implementation of sort(X[], boolean).

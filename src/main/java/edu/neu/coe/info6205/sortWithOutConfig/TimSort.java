@@ -9,6 +9,7 @@ import edu.neu.coe.info6205.sortWithOutConfig.helper.Helper;
 import edu.neu.coe.info6205.sortWithOutConfig.helper.SortWithHelper;
 
 import java.io.IOException;
+import java.text.Collator;
 import java.util.Arrays;
 
 /**
@@ -25,6 +26,11 @@ public class TimSort<X extends Comparable<X>> extends SortWithHelper<X> {
      */
     public TimSort(Helper<X> helper) {
         super(helper);
+    }
+
+    @Override
+    public void sort(String[] array, int i, int length, Collator instance) {
+
     }
 
     /**
