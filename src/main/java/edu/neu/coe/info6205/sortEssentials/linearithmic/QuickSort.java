@@ -105,7 +105,7 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
         if (partitioner == null) throw new RuntimeException("partitioner not set");
         Collection<Partition<X>> partitions = partitioner.partition(partition,cl);
         partitions.forEach(p ->{
-                System.out.println(p);
+//                System.out.println(p);
                 sort(p.xs, p.from, p.to, depth + 1,cl);
 
         });

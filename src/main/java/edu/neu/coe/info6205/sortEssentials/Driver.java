@@ -130,6 +130,8 @@ public class Driver {
         System.out.println(d);
         FileUtil fileUtil = new FileUtil("src/main/RandomString/Chinese/sortedChinese.txt");
         String[] in = fileUtil.read();
+//        String[] res = qs.sort()
+        System.out.println(Arrays.equals(array,in));
 
     }
 

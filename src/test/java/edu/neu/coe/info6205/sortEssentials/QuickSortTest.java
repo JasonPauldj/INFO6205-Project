@@ -3,6 +3,7 @@ package edu.neu.coe.info6205.sortEssentials;
 
 import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort;
 import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort_DualPivot;
+import edu.neu.coe.info6205.util.FileUtil;
 import org.junit.Test;
 
 import java.text.Collator;
@@ -52,6 +53,20 @@ public class QuickSortTest {
          s.sort(input,0,input.length,0,Collator.getInstance(Locale.CHINA));
         Arrays.sort(input, Collator.getInstance(Locale.CHINA));
         assertArrayEquals(expected, input);
+    }
+
+    @Test
+    public  void testSort4(){
+//        String[] input = "阿兵 阿安 阿冰冰 阿斌 阿滨 阿冰 阿彬".split(" ");
+//        String[] expected = "阿安 阿彬 阿斌 阿滨 阿兵 阿冰 阿冰冰".split(" ");
+        FileUtil fu = new FileUtil("/Users/ebby/Desktop/Grad School/PSA/INFO6205-Project/src/main/RandomString/Chinese/shuffledChinese.txt");
+        String[] input = fu.read();
+        FileUtil fo = new FileUtil("/Users/ebby/Desktop/Grad School/PSA/INFO6205-Project/src/main/RandomString/Chinese/sortedChinese.txt");
+        String[] expected = fo.read();
+        QuickSort_DualPivot<String> s = new QuickSort_DualPivot<String>("QuickSort", input.length);
+        String[] sorted = s.sort(input,true,Collator.getInstance(Locale.CHINA));
+//        Arrays.sort(input,true Collator.getInstance(Locale.CHINA));
+        assertArrayEquals(expected, sorted);
     }
 
 }
