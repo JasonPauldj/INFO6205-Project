@@ -1,14 +1,12 @@
 package edu.neu.coe.info6205.sortEssentials;
 
-import edu.neu.coe.info6205.sortEssentials.InsertionSortMSD;
-
 import java.text.Collator;
 import java.util.*;
 
 /**
  * Class to implement Most significant digit string sort (a radix sort).
  */
-public class MSDStringSort {
+public class MSDStringSortCopy {
 
     /**
      * Sort an array of Strings using MSDStringSort.
@@ -18,23 +16,23 @@ public class MSDStringSort {
     public static void sort(String[] a) {
         int n = a.length;
         aux = new String[n];
-        sort(a, 0, n, 0, null);
+        sort(a, 0, n, 0,null);
     }
 
-    public static void sort(String[] a, Collator cl) {
+    public static void sort(String[] a,Collator cl) {
         int n = a.length;
         aux = new String[n];
-        sort(a, 0, n, 0, cl);
+        sort(a, 0, n, 0,cl);
     }
 
     /**
      * Sort from a[lo] to a[hi] (exclusive), ignoring the first d characters of each String.
      * This method is recursive.
      *
-     * @param a  the array to be sorted.
+     * @param a the array to be sorted.
      * @param lo the low index.
      * @param hi the high index (this index is included in the sort)
-     * @param d  the number of characters in each String to be skipped.
+     * @param d the number of characters in each String to be skipped.
      */
 //    private static void sort(String[] a, int lo, int hi, int d) {
 //        if (hi <= lo + cutoff ) InsertionSortMSD.sort(a, lo, hi, d);
@@ -109,38 +107,37 @@ public class MSDStringSort {
 ////            }
 //        }
 //    }
+
+
     private static void sort(String[] a, int lo, int hi, int d, Collator cl) {
-        if (hi <= lo + cutoff )
-            InsertionSortMSD.sort(a, lo, hi, d,cl);
-        else
-        {
-        if (lo >= hi - 1)
-            return;
-
-            Map<String, Integer> map;
-            if (cl == null)
-                map = new TreeMap<>(Comparator.comparingInt(Integer::valueOf));
+//        if (hi <= lo + cutoff )
+//            InsertionSortMSD.sort(a, lo, hi, d,cl);
+//        else
+        if(lo>=hi-1)
+                return;
+            {
+//            Map<String,Integer> map = new TreeMap<String,Integer>(Collator.getInstance(Locale.ENGLISH));
+            Map<String,Integer> map;
+            if(cl==null)
+                map = new TreeMap<String,Integer>((o1, o2) -> Integer.valueOf(o1) -Integer.valueOf(o2));
             else
-                map = new TreeMap<>(cl);
-            //            int[] count = new int[radix + 2];
-
-            // Compute frequency counts.
-            for (int i = lo; i < hi; i++) {
-                String key = (cl == null) ? String.valueOf(charAt(a[i], d)) : strCharAt(a[i], d);
-                map.putIfAbsent(key, 0);
-                map.put(key, map.get(key) + 1);
+                map = new TreeMap<String,Integer>(cl);
+            //            int[] count = new int[radix + 2];        // Compute frequency counts.
+            for (int i = lo; i < hi; i++){
+                String key = (cl==null)?String.valueOf( charAt(a[i],d)) : strCharAt(a[i],d);
+                map.putIfAbsent(key,0);
+                map.put(key,map.get(key)+1);
             }
-//            System.out.println(map.toString());
+            System.out.println(map.toString());
 
 //                count[charAt(a[i], d) + 2]++;
 //            for (int r = 0; r < radix + 1; r++)      // Transform counts to indices.
 //                count[r + 1] += count[r];
-            //Transforming counts to ending indices of each key
-            List<String> keySet = new ArrayList<>(map.keySet());
-            for (int r = 1; r < keySet.size(); r++) {
-                map.put(keySet.get(r), map.get(keySet.get(r - 1)) + map.get(keySet.get(r)));
+            List<String> keySet = new ArrayList<String>(map.keySet());
+            for(int r =1 ; r <keySet.size() ; r++){
+                map.put(keySet.get(r),map.get(keySet.get(r-1)) + map.get(keySet.get(r)));
             }
-//            System.out.println(map.toString());
+            System.out.println(map.toString());
 //            for (int i = lo; i < hi; i++){ // Distribute.
 //                String key = String.valueOf(charAt(a[i], d) + 1);
 //                map.putIfAbsent(key,0);
@@ -148,30 +145,32 @@ public class MSDStringSort {
 //                aux[map.get(key)]  = a[i];
 ////                aux[count[]++] = a[i];
 //            }
-            // Distribute.
-            for (int i = lo; i < hi; i++) {
-                String key = (cl == null) ? String.valueOf(charAt(a[i], d)) : strCharAt(a[i], d);
-                aux[map.get(key) - 1] = a[i];
-                map.put(key, map.get(key) - 1);
+            int carry = (keySet.size() ==1)?map.get(keySet.get(0)):0;
+            for (int i = lo; i < hi; i++){ // Distribute.
+                String key = (cl==null)?String.valueOf( charAt(a[i],d)) : strCharAt(a[i],d);
+//                        String.valueOf(charAt(a[i], d) );
+                aux[map.get(key)-1]  = a[i];
+                map.put(key,map.get(key)-1);
+//                aux[count[]++] = a[i];
             }
-//            System.out.println("aux" + Arrays.toString(aux));
+            System.out.println("aux" + Arrays.toString(aux));
 
 //                aux[count[charAt(a[i], d) + 1]++] = a[i];
             // Copy back.
             if (hi - lo >= 0) System.arraycopy(aux, 0, a, lo, hi - lo);
 
-//            System.out.println(map);
-
             // Recursively sort for each character value.
-                int hiInd;
-                if (keySet.get(0) != "-1") {
-                    hiInd=(keySet.size()==1) ? hi : lo+map.get(keySet.get(1));
-                    sort(a, lo + map.get(keySet.get(0)), hiInd, d + 1, cl);
+            if(keySet.size()>1) {
+                System.out.println(map);
+                if(keySet.get(0)!="-1")
+                    sort(a, lo + map.get(keySet.get(0)) , lo + map.get(keySet.get(1)), d + 1, cl);
+                for (int r = 1; r < keySet.size() ; r++) {
+                    int hiInd = (r== keySet.size() -1) ? hi : lo + map.get(keySet.get(r+1));
+                    sort(a, lo + map.get(keySet.get(r)) , hiInd, d + 1, cl);
                 }
-                for (int r = 1; r < keySet.size(); r++) {
-                     hiInd = (r == keySet.size() - 1) ? hi : lo + map.get(keySet.get(r + 1));
-                    sort(a, lo + map.get(keySet.get(r)), hiInd, d + 1, cl);
-                }
+            }
+            else
+                sort(a,lo,hi,d+1,cl);
 //            for(int r=0; r < radix;r++){
 //                sort(a,lo+count[r],lo+count[r+1],d+1);
 //            }
@@ -189,8 +188,7 @@ public class MSDStringSort {
         if (d < s.length()) return Character.toString(s.charAt(d));
         else return String.valueOf(-1);
     }
-
     private static final int radix = 256;
-    private static final int cutoff = 15;
+    private static final int cutoff = 3;
     private static String[] aux;       // auxiliary array for distribution
 }

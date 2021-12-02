@@ -18,7 +18,7 @@ public class InsertionSortMSDTest {
         String[] input = "she sells seashells by the seashore the shells she sells are surely seashells".split(" ");
         String[] expected = "are by seashells seashells seashore sells sells she she shells surely the the".split(" ");
 
-        InsertionSortMSD.sort(input, 0, input.length, 0);
+        InsertionSortMSD.sort(input, 0, input.length, 0,null);
         assertArrayEquals(expected, input);
     }
 
@@ -27,7 +27,7 @@ public class InsertionSortMSDTest {
         String[] input = "she sells seashells seashore shells she sells surely seashells".split(" ");
         String[] expected = "seashells seashells seashore sells sells she she shells surely".split(" ");
 
-        InsertionSortMSD.sort(input, 0, input.length, 1);
+        InsertionSortMSD.sort(input, 0, input.length, 1,null);
         assertArrayEquals(expected, input);
     }
 
@@ -41,7 +41,7 @@ public class InsertionSortMSDTest {
         }
         String[] expected = Arrays.copyOf(input,input.length);
         Arrays.sort(expected);
-        InsertionSortMSD.sort(input, 0, input.length, 0);
+        InsertionSortMSD.sort(input, 0, input.length, 0,null);
         assertArrayEquals(expected, input);
     }
 
@@ -51,7 +51,7 @@ public class InsertionSortMSDTest {
         String[] input = "sells seashells seashore sells seashells".split(" ");
         String[] expected = "seashells seashells seashore sells sells".split(" ");
 
-        InsertionSortMSD.sort(input, 0, input.length, 2);
+        InsertionSortMSD.sort(input, 0, input.length, 2,null);
         assertArrayEquals(expected, input);
     }
 
@@ -64,6 +64,7 @@ public class InsertionSortMSDTest {
 //        String[] input = "阿兵 阿安 阿冰冰 阿斌 阿滨 阿冰 阿彬".split(" ");
 //        String[] expected = "阿安 阿彬 阿斌 阿滨 阿兵 阿冰 阿冰冰".split(" ");
         Arrays.sort(in, Collator.getInstance(Locale.CHINA));
+        InsertionSortMSD.sort(in, 0, in.length, 0,Collator.getInstance(Locale.CHINA));
         assertArrayEquals(in, out);
     }
 }
