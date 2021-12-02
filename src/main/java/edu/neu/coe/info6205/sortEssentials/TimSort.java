@@ -1,12 +1,7 @@
-/*
-  (c) Copyright 2018, 2019 Phasmid Software
- */
 package edu.neu.coe.info6205.sortEssentials;
 
-import edu.neu.coe.info6205.sortEssentials.BaseHelper;
-import edu.neu.coe.info6205.sortEssentials.Helper;
-import edu.neu.coe.info6205.sortEssentials.SortWithHelper;
-import edu.neu.coe.info6205.util.Config;
+
+
 
 import java.io.IOException;
 import java.text.Collator;
@@ -41,11 +36,19 @@ public class TimSort<X extends Comparable<X>> extends SortWithHelper<X> {
         this(new BaseHelper<>(DESCRIPTION));
     }
 
+    @Override
     public void sort(X[] xs, int from, int to) {
         Arrays.sort(xs, from, to);
     }
-    public void sort(X[] xs, int from, int to, Collator cl) {
+
+    @Override
+    public void sortBuiltInCollator(X[] xs, int from, int to, Collator cl) {
         Arrays.sort(xs, from, to, cl);
+    }
+
+    @Override
+    public void sortIBMCollator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl) {
+        Arrays.sort(xs,from,to,cl);
     }
 
     public static final String DESCRIPTION = "Timsort";

@@ -3,13 +3,18 @@
  */
 package edu.neu.coe.info6205.sortEssentials.huskySortUtils;
 
+import com.ibm.icu.text.CollationKey;
+import com.ibm.icu.util.ULocale;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.LongBuffer;
 import java.nio.charset.Charset;
+import java.text.Collator;
 import java.time.ZoneOffset;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -118,6 +123,25 @@ public final class HuskyCoderFactory {
             return unicodeToLong(str);
         }
     };
+
+    /**
+     * A Husky Coder for unicode Strings.
+     */
+    public final static HuskySequenceCoder<String> chineseCoder = new BaseHuskySequenceCoder<String>("Unicode", MAX_LENGTH_UNICODE - 1, Collator.getInstance(Locale.CHINESE.CHINESE)) {
+        /**
+         * Encode x as a long.
+         * As much as possible, if x > y, huskyEncode(x) > huskyEncode(y).
+         * If this cannot be guaranteed, then the result of imperfect(z) will be true.
+         *
+         * @param str the X value to encode.
+         * @return a long which is, as closely as possible, monotonically increasing with the domain of X values.
+         */
+        public long huskyEncode(final String str) {
+            String ck= new String(getCollationKeyByteArray(str));
+            return unicodeToLong(ck);
+        }
+    };
+
 
     /**
      * A Husky Coder for UTF Strings.

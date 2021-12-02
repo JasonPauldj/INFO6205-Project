@@ -72,6 +72,17 @@ public interface Helper<X extends Comparable<X>>  {
     int compare(X[] xs, int i, int j, Collator cl);
 
     /**
+     * Compare elements i and j of xs within the subarray lo..hi
+     *
+     * @param xs the array.
+     * @param i  one of the indices.
+     * @param j  the other index.
+     * @param cl Collator from IBM.
+     * @return the result of comparing xs[i] to xs[j]
+     */
+    int compare(X[] xs, int i, int j, com.ibm.icu.text.Collator cl);
+
+    /**
      * Compare values v and w and return true if v is less than w.
      *
      * @param v the first value.
@@ -123,6 +134,18 @@ public interface Helper<X extends Comparable<X>>  {
     }
 
     default boolean swapConditional(X[] xs, int i, int j,Collator cl) {
+        final X v = xs[i];
+        final X w = xs[j];
+        boolean result = cl.compare(v,w) > 0;
+        if (result) {
+            // CONSIDER invoking swap
+            xs[i] = w;
+            xs[j] = v;
+        }
+        return result;
+    }
+
+    default boolean swapConditional(X[] xs, int i, int j, com.ibm.icu.text.Collator cl) {
         final X v = xs[i];
         final X w = xs[j];
         boolean result = cl.compare(v,w) > 0;

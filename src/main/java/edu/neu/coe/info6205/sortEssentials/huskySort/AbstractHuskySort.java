@@ -8,8 +8,7 @@ import edu.neu.coe.info6205.sortEssentials.SortWithHelper;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoderFactory;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyHelper;
-import edu.neu.coe.info6205.sortWithOutConfig.helper.Helper;
-import edu.neu.coe.info6205.util.Config;
+
 import edu.neu.coe.info6205.util.LazyLogger;
 
 import java.util.function.Consumer;
@@ -51,6 +50,12 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         // NOTE: Second pass to fix any remaining inversions.
         huskyHelper.getPostSorter().accept(xs);
         return xs;
+    }
+
+    public X[] huskySort(X[] xs, boolean makeCopy) {
+        X[] result = preSort(xs,false);
+        sort(result, 0, result.length);
+        return result;
     }
 
 

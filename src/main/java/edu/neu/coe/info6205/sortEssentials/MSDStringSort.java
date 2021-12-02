@@ -1,6 +1,6 @@
 package edu.neu.coe.info6205.sortEssentials;
 
-import edu.neu.coe.info6205.sortWithOutConfig.InsertionSortMSD;
+import edu.neu.coe.info6205.sortEssentials.InsertionSortMSD;
 
 import java.text.Collator;
 import java.util.*;

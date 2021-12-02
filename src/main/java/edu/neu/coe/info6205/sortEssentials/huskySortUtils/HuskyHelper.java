@@ -185,6 +185,7 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
         return helper.preProcess(xs);
     }
 
+
     /**
      * Method to register the current recursion depth.
      *
@@ -243,7 +244,12 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
 
     @Override
     public int compare(X[] xs, int i, int j, Collator cl) {
-        return 0;
+        return cl.compare(xs[i],xs[j]);
+    }
+
+    @Override
+    public int compare(X[] xs, int i, int j, com.ibm.icu.text.Collator cl) {
+        return cl.compare(xs[i],xs[j]);
     }
 
     /**
@@ -319,7 +325,6 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
     }
 
     /**
-     * TODO this should be package private but we have to get the classes in the same package first.
      *
      * @param array the array from which we build a long array by encoding.
      */

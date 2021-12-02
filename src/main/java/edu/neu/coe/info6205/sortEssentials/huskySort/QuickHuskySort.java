@@ -90,11 +90,17 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      */
     public void sort(X[] xs, int from, int to) {
         quickSort(xs, getHelper().getLongs(), from, to - 1);
+        postSort(xs);
     }
 
     @Override
-    public void sort(X[] xs, int from, int to, Collator cl) {
+    public void sortBuiltInCollator(X[] xs, int from, int to, Collator cl) {
+        //todo
+    }
 
+    @Override
+    public void sortIBMCollator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl) {
+        //todo
     }
 
     // CONSIDER inlining this private method

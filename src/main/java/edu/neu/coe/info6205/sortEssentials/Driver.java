@@ -1,13 +1,14 @@
 package edu.neu.coe.info6205.sortEssentials;
 
+import com.ibm.icu.util.ULocale;
 import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort_DualPivot;
-import edu.neu.coe.info6205.sortEssentials.TimSort;
 import edu.neu.coe.info6205.sortEssentials.huskySort.QuickHuskySort;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoderFactory;
 import edu.neu.coe.info6205.util.Benchmark;
 import edu.neu.coe.info6205.util.FileUtil;
 
 import java.io.IOException;
+import java.text.CollationKey;
 import java.text.Collator;
 import java.util.*;
 import java.util.function.Consumer;
@@ -19,7 +20,19 @@ public class Driver {
         String[] descs = new String[]{"Tim Sort", "Quick Sort Dual-Pivot", "QuickHusky Sort", "LSD String Sort", "MSD String Sort"};
         List<Consumer<String[]>> classList = new ArrayList<>();
 //        benchmarkTimSort();
-        benchmarkQuickSort();
+        //benchmarkQuickSort();
+
+        Collator c = Collator.getInstance(Locale.ENGLISH);
+        CollationKey ck1 = c.getCollationKey("洪文胜");
+        CollationKey ck2 = c.getCollationKey("樊辉辉");
+        byte[] ck1byte = ck1.toByteArray();
+        byte[] ck2byte = ck2.toByteArray();
+        System.out.println(new String(ck1.toByteArray()));
+        System.out.println(new String(ck2.toByteArray()));
+        ck1.compareTo(ck2);
+        int a=10;
+
+
 //        if (args[0].equals("1")) {
 //            populateClassList(classList,null);
 //            String[] array = getDataToSort(1);
@@ -70,14 +83,14 @@ public class Driver {
                 if (cl == null)
                     new TimSort<String>().sort(arr, 0, arr.length);
                 else
-                    new TimSort<String>().sort(arr, 0, arr.length, cl);
+                    new TimSort<String>().sortBuiltInCollator(arr, 0, arr.length, cl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
         classList.add((String[] arr) -> {
             if (cl != null)
-                new QuickSort_DualPivot<String>(arr.length).sort(arr, 0, arr.length, 0, cl);
+                new QuickSort_DualPivot<String>(arr.length).sort(arr,false,cl);
             else
                 new QuickSort_DualPivot<String>(arr.length).sort(arr, 0, arr.length, 0);
         });
@@ -117,8 +130,7 @@ public class Driver {
                 (String[] array) -> {
                     try {
                        QuickSort_DualPivot qs= new QuickSort_DualPivot<String>("Quick Sort", array.length);
-                        array =(String[])qs.sort(array, true,Collator.getInstance(Locale.CHINA));
-                        int a=9;
+                        array =(String[])qs.sort(array, true, com.ibm.icu.text.Collator.getInstance(Locale.CHINA));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -139,7 +151,7 @@ public class Driver {
         Benchmark<String[]> bm = new Benchmark<String[]>("benchmarking tim sort",
                 (String[] array) -> {
                     try {
-                        new TimSort<String>().sort(array, 0, array.length, Collator.getInstance(Locale.CHINA));
+                        new TimSort<String>().sortBuiltInCollator(array, 0, array.length, Collator.getInstance(Locale.CHINA));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -157,7 +169,9 @@ public class Driver {
         Benchmark<String[]> bm = new Benchmark<String[]>("benchmarking tim sort",
                 (String[] array) -> {
                     try {
-                        QuickHuskySort qhs = new QuickHuskySort<String>(HuskyCoderFactory.englishCoder);
+                        QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",HuskyCoderFactory.chineseCoder,(String[] arr) ->{
+                            Arrays.sort(arr,  Collator.getInstance(Locale.CHINA));
+                        });
                         qhs.preSort(array, false);
                         qhs.sort(array, 0, array.length);
                     } catch (Exception e) {
@@ -165,13 +179,10 @@ public class Driver {
                     }
                 });
 
-        String[] array = new String[1000];
-        Random random = new Random();
+        String[] array = getDataToSort(2);
 
-        for (int j = 0; j < array.length; j++) {
-            array[j] = String.valueOf(random.nextInt());
-        }
-        System.out.println(bm.run(array, 100));
+        double d = bm.run(array,1);
+        System.out.println(d);
     }
 
 }
