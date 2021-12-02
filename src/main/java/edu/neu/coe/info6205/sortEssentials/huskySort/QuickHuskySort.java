@@ -89,6 +89,7 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      * @param to   the index of the first element not to sort.
      */
     public void sort(X[] xs, int from, int to) {
+        generateLongs(xs);
         quickSort(xs, getHelper().getLongs(), from, to - 1);
         postSort(xs);
     }

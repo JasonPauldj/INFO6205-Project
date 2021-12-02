@@ -35,6 +35,27 @@ public class FileUtil {
         return null;
     }
 
+    public String[] read(int noOfLines) {
+        int cnt=0;
+        try(BufferedReader r = new BufferedReader(new FileReader(this.filepath))) {
+            List<String>  retStringList = new ArrayList<>();
+            String thisLine=r.readLine();
+            while (thisLine != null && cnt < noOfLines ) {
+                retStringList.add(thisLine);
+                thisLine= r.readLine();
+                cnt++;
+            }
+            String [] retStringArray = new String[retStringList.size()];
+            return  retStringList.toArray(retStringArray);
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void writeAsCsv(List<String> lines){
         try {
             String result = "";

@@ -20,6 +20,13 @@ import java.util.function.Consumer;
  */
 public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWithHelper<X> {
 
+
+    public final void generateLongs(final X[] xs) {
+        // NOTE: Prepare for first pass where we code to longs and sort according to those.
+        huskyHelper.doCoding(xs);
+    }
+
+
     /**
      * Init HuskyHelper and initialize the long array.
      * Make copy if appropriate.
@@ -33,6 +40,7 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         // NOTE: Prepare for first pass where we code to longs and sort according to those.
         final X[] result = super.preSort(xs, makeCopy);
         huskyHelper.doCoding(result);
+        sort(result,0, result.length);
         return result;
     }
 

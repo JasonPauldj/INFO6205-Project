@@ -70,8 +70,12 @@ public class QuickSortTest {
 //        FileUtil fw = new FileUtil();
 //        fw.writeAsCsv(Arrays.asList(sortedIBMColl));
         String filepath = "/Users/jasonpauldarivemula/Desktop/INFO6205-Project/src/main/RandomString/Chinese/IBMsortedChinese.txt";
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
-        writer.write(Arrays.toString(sortedIBMColl));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filepath,true));
+
+        for (String st: sortedIBMColl) {
+            writer.write(st);
+            writer.newLine();
+        }
         writer.close();
 //        assertArrayEquals(expected,sortedInBuilt);
        assertArrayEquals(expected, sortedIBMColl);
