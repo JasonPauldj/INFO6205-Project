@@ -1,7 +1,7 @@
 package edu.neu.coe.info6205.sortEssentials;
 
 import edu.neu.coe.info6205.sortEssentials.Helper;
-import edu.neu.coe.info6205.util.Config;
+
 import edu.neu.coe.info6205.util.Utilities;
 
 import java.text.Collator;
@@ -57,6 +57,11 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
 
     @Override
     public int compare(X[] xs, int i, int j, Collator cl) {
+        return cl.compare(xs[i],xs[j]);
+    }
+
+    @Override
+    public int compare(X[] xs, int i, int j, com.ibm.icu.text.Collator cl) {
         return cl.compare(xs[i],xs[j]);
     }
 

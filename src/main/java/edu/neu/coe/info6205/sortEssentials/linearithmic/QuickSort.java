@@ -3,7 +3,6 @@ package edu.neu.coe.info6205.sortEssentials.linearithmic;
 import edu.neu.coe.info6205.sortEssentials.Helper;
 import edu.neu.coe.info6205.sortEssentials.SortWithHelper;
 import edu.neu.coe.info6205.sortEssentials.elementary.InsertionSort;
-import edu.neu.coe.info6205.util.Config;
 import edu.neu.coe.info6205.util.LazyLogger;
 
 import java.text.Collator;
@@ -47,6 +46,7 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      * @param makeCopy if set to true, we make a copy first and sort that.
      * @return the result (sorted version of xs).
      */
+    @Override
     public X[] sort(X[] xs, boolean makeCopy) {
         // CONSIDER merge with MergeSortBasic and maybe others.
         getHelper().init(xs.length);
@@ -62,11 +62,28 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      * @param makeCopy if set to true, we make a copy first and sort that.
      * @return the result (sorted version of xs).
      */
+    @Override
     public X[] sort(X[] xs, boolean makeCopy, Collator cl) {
         // CONSIDER merge with MergeSortBasic and maybe others.
         getHelper().init(xs.length);
         X[] result = makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
-        sort(result, 0, result.length, 0,cl);
+        sortBuiltInCollator(result, 0, result.length,cl);
+        return result;
+    }
+
+    /**
+     * Method to sort.
+     *
+     * @param xs       sort the array xs, returning the sorted result, leaving xs unchanged.
+     * @param makeCopy if set to true, we make a copy first and sort that.
+     * @return the result (sorted version of xs).
+     */
+    @Override
+    public X[] sort(X[] xs, boolean makeCopy, com.ibm.icu.text.Collator cl) {
+        // CONSIDER merge with MergeSortBasic and maybe others.
+        getHelper().init(xs.length);
+        X[] result = makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
+        sortIBMCollator(result, 0, result.length,cl);
         return result;
     }
 
@@ -83,32 +100,9 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
         getHelper().registerDepth(depth);
         Partition<X> partition = createPartition(xs, from, to);
         if (partitioner == null) throw new RuntimeException("partitioner not set");
-        Collection<Partition<X>> partitions = partitioner.partition(partition,null);
+        Collection<Partition<X>> partitions = partitioner.partition(partition);
         partitions.forEach(p ->
                 sort(p.xs, p.from, p.to, depth + 1));
-    }
-
-    /**
-     * Sort the sub-array xs[from] .. xs[to-1]
-     *
-     * @param xs    the complete array from which this sub-array derives.
-     * @param from  the index of the first element to sort.
-     * @param to    the index of the first element not to sort.
-     * @param depth the depth of the recursion.
-     * @param cl the collator.
-     */
-    public void sort(X[] xs, int from, int to, int depth, Collator cl) {
-        if (terminator(xs, from, to, depth,cl))
-            return;
-        getHelper().registerDepth(depth);
-        Partition<X> partition = createPartition(xs, from, to);
-        if (partitioner == null) throw new RuntimeException("partitioner not set");
-        Collection<Partition<X>> partitions = partitioner.partition(partition,cl);
-        partitions.forEach(p ->{
-                System.out.println(p);
-                sort(p.xs, p.from, p.to, depth + 1,cl);
-
-        });
     }
 
     /**
@@ -118,9 +112,56 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      * @param from the index of the first element to sort.
      * @param to   the index of the first element not to sort.
      */
+    @Override
     public void sort(X[] xs, int from, int to) {
         throw new RuntimeException("This sort signature is not used for Quicksort");
     }
+
+    /**
+     * Sort the sub-array xs[from] .. xs[to-1]
+     *
+     * @param xs    the complete array from which this sub-array derives.
+     * @param from  the index of the first element to sort.
+     * @param to    the index of the first element not to sort.
+     * @param cl the collator.
+     */
+    @Override
+    public void sortBuiltInCollator(X[] xs, int from, int to, Collator cl) {
+        if (terminator(xs, from, to,cl))
+            return;
+        Partition<X> partition = createPartition(xs, from, to);
+        if (partitioner == null) throw new RuntimeException("partitioner not set");
+        Collection<Partition<X>> partitions = partitioner.partition(partition,cl);
+        partitions.forEach(p ->{
+//                System.out.println(p);
+                sortBuiltInCollator(p.xs, p.from, p.to,cl);
+
+        });
+    }
+
+    /**
+     * Sort the sub-array xs[from] .. xs[to-1]
+     *
+     * @param xs    the complete array from which this sub-array derives.
+     * @param from  the index of the first element to sort.
+     * @param to    the index of the first element not to sort.
+     * @param cl the collator.
+     */
+    @Override
+    public void sortIBMCollator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl) {
+        if (terminator(xs, from, to,cl))
+            return;
+        Partition<X> partition = createPartition(xs, from, to);
+        if (partitioner == null) throw new RuntimeException("partitioner not set");
+        Collection<Partition<X>> partitions = partitioner.partition(partition,cl);
+        partitions.forEach(p ->{
+//            System.out.println(p);
+            sortIBMCollator(p.xs, p.from, p.to,cl);
+
+        });
+    }
+
+
 
     /**
      * Protected method to determine to terminate the recursion of this quick sort.
@@ -148,13 +189,30 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      * @param xs    the complete array from which this sub-array derives.
      * @param from  the index of the first element to sort.
      * @param to    the index of the first element not to sort.
-     * @param depth the current depth of the recursion.
      * @return true if there is no further work to be done.
      */
-    protected boolean terminator(X[] xs, int from, int to, int depth, Collator cl) {
+    protected boolean terminator(X[] xs, int from, int to, Collator cl) {
         @SuppressWarnings("UnnecessaryLocalVariable") int lo = from;
         if (to <= lo + getHelper().cutoff()) {
-            insertionSort.sort(xs, from, to,cl);
+            insertionSort.sortBuiltInCollator(xs, from, to,cl);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Protected method to determine to terminate the recursion of this quick sort.
+     * NOTE that in this implementation, the depth is ignored.
+     *
+     * @param xs    the complete array from which this sub-array derives.
+     * @param from  the index of the first element to sort.
+     * @param to    the index of the first element not to sort.
+     * @return true if there is no further work to be done.
+     */
+    protected boolean terminator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl) {
+        @SuppressWarnings("UnnecessaryLocalVariable") int lo = from;
+        if (to <= lo + getHelper().cutoff()) {
+            insertionSort.sortIBMCollator(xs, from, to,cl);
             return true;
         }
         return false;

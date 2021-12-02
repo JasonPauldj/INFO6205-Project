@@ -1,6 +1,6 @@
 package edu.neu.coe.info6205.sortEssentials;
 
-import edu.neu.coe.info6205.sortWithOutConfig.InsertionSortMSD;
+import edu.neu.coe.info6205.sortEssentials.InsertionSortMSD;
 
 /**
  * Class to implement Most significant digit string sort (a radix sort).

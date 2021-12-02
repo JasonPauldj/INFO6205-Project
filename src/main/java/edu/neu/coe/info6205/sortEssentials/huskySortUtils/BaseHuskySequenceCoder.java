@@ -1,5 +1,9 @@
 package edu.neu.coe.info6205.sortEssentials.huskySortUtils;
 
+import com.ibm.icu.text.CollationKey;
+
+import java.text.Collator;
+
 /**
  * Base Husky sequence coder.
  */
@@ -26,6 +30,22 @@ public abstract class BaseHuskySequenceCoder<X extends CharSequence> implements 
     public BaseHuskySequenceCoder(final String name, final int maxLength) {
         this.name = name;
         this.maxLength = maxLength;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param name      the name of this coder.
+     * @param maxLength the maximum length of a sequence which can be perfectly encoded.
+     */
+    public BaseHuskySequenceCoder(final String name, final int maxLength, java.text.Collator cl) {
+        this.name = name;
+        this.maxLength = maxLength;
+        this.cl=cl;
+    }
+
+    public byte[] getCollationKeyByteArray(String str){
+        return cl.getCollationKey(str).toByteArray();
     }
 
     /**
@@ -73,4 +93,5 @@ public abstract class BaseHuskySequenceCoder<X extends CharSequence> implements 
 
     private final String name;
     private final int maxLength;
+    private Collator cl=null;
 }
