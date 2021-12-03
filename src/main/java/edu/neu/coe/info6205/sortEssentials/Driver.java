@@ -25,8 +25,7 @@ public class Driver {
 
     public static void main(String[] args) {
 
-        String[] descs = new String[]{"Tim Sort", "Quick Sort Dual-Pivot", "QuickHusky Sort", "LSD String Sort", "MSD String Sort"};
-        List<Consumer<String[]>> sortFuncs = new ArrayList<>();
+
 
         //QUICK SORT ENGLISH
         benchMarkAnySort("Quick Sort",  (String[] array) -> {
