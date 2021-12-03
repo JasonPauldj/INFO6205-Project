@@ -1,6 +1,5 @@
 package edu.neu.coe.info6205.sortEssentials;
 
-import com.ibm.icu.util.ULocale;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.ChineseCoder;
 import edu.neu.coe.info6205.sortEssentials.linearithmic.QuickSort_DualPivot;
 import edu.neu.coe.info6205.sortEssentials.huskySort.QuickHuskySort;
@@ -9,9 +8,7 @@ import edu.neu.coe.info6205.util.Benchmark;
 import edu.neu.coe.info6205.util.FileUtil;
 import edu.neu.coe.info6205.util.Language;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.CollationKey;
 import java.text.Collator;
 import java.util.*;
 import java.util.function.Consumer;
@@ -26,12 +23,11 @@ public class Driver {
     public static void main(String[] args) {
 
 
-
         //QUICK SORT ENGLISH
-        benchMarkAnySort("Quick Sort",  (String[] array) -> {
+        benchMarkAnySort("Quick Sort Dual Pivot",  (String[] array) -> {
             try {
                 QuickSort_DualPivot qs= new QuickSort_DualPivot<String>("Quick Sort", array.length);
-                array =(String[])qs.sort(array, true);
+                qs.sort(array, true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,7 +42,6 @@ public class Driver {
             }
         }, Language.ENGLISH);
 
-
         //HUSKY SORT ENGLISH
         benchMarkAnySort("Husky Sort",  (String[] array) -> {
             try {
@@ -58,6 +53,33 @@ public class Driver {
                 e.printStackTrace();
             }
         }, Language.ENGLISH);
+
+        //LSD SORT ENGLISH
+        benchMarkAnySort("LSD Sort",  (String[] array) -> {
+            try {
+                LSDStringSort lsd = new LSDStringSort();
+                String[] copy = Arrays.copyOf(array,array.length);
+                lsd.sort(copy);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, Language.ENGLISH);
+
+        //MSD SORT ENGLISH
+        benchMarkAnySort("MSD Sort",  (String[] array) -> {
+            try {
+                MSDStringSort msd = new MSDStringSort();
+                String[] copy = Arrays.copyOf(array,array.length);
+                msd.sort(copy);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, Language.ENGLISH);
+
+
+
+
+
 
 
 //        if (args[0].equals("1")) {
@@ -152,9 +174,6 @@ public class Driver {
         });
         classList.add((String[] arr) -> {
             new LSDStringSort().sort(arr);
-        });
-        classList.add((String[] arr) -> {
-            new MSDStringSort().sort(arr);
         });
     }
 

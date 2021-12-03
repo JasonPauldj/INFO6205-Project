@@ -2,12 +2,11 @@ package edu.neu.coe.info6205.sortEssentials.huskySortUtils;
 
 import edu.neu.coe.info6205.sortEssentials.BaseHelper;
 import edu.neu.coe.info6205.sortEssentials.Helper;
-import edu.neu.coe.info6205.sortEssentials.huskySortUtils.Coding;
+
 
 import java.text.Collator;
-import java.util.Random;
 import java.util.function.Consumer;
-import java.util.function.Function;
+
 
 /**
  * Helper class for sorting methods with special technique of HuskySort.
@@ -120,31 +119,6 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
     }
 
     /**
-     * TODO eliminate this method as it has been superseded by swapConditional. However, maybe the latter is a better name.
-     * Method to fix a potentially unstable inversion.
-     *
-     * @param xs the array of X elements.
-     * @param i  the index of the lower of the elements to be swapped.
-     * @param j  the index of the higher of the elements to be swapped.
-     */
-    @Override
-    public void fixInversion(X[] xs, int i, int j) {
-        helper.fixInversion(xs, i, j);
-    }
-
-    /**
-     * TODO eliminate this method as it has been superseded by swapStableConditional. However, maybe the latter is a better name.
-     * Method to fix a stable inversion.
-     *
-     * @param xs the array of X elements.
-     * @param i  the index of the higher of the adjacent elements to be swapped.
-     */
-    @Override
-    public void fixInversion(X[] xs, int i) {
-        helper.fixInversion(xs, i);
-    }
-
-    /**
      * Get the cutoff value.
      *
      * @return the cutoff value.
@@ -152,26 +126,6 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
     @Override
     public int cutoff() {
         return helper.cutoff();
-    }
-
-    /**
-     * If instrumenting, increment the number of copies by n.
-     *
-     * @param n the number of copies made.
-     */
-    @Override
-    public void incrementCopies(int n) {
-        helper.incrementCopies(n);
-    }
-
-    /**
-     * If instrumenting, increment the number of fixes by n.
-     *
-     * @param n the number of copies made.
-     */
-    @Override
-    public void incrementFixes(int n) {
-        helper.incrementFixes(n);
     }
 
     /**
@@ -206,14 +160,14 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
         return helper.maxDepth();
     }
 
-    /**
+    /*
      * @param clazz the class of X.
      * @param f     a function which takes a Random and generates a random value of X.
      * @return an array of randomly chosen X values.
      */
-    public X[] random(Class<X> clazz, Function<Random, X> f) {
-        return helper.random(clazz, f);
-    }
+//    public X[] random(Class<X> clazz, Function<Random, X> f) {
+//        return helper.random(clazz, f);
+//    }
 
     /**
      * @return the description.

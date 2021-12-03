@@ -1,12 +1,9 @@
 package edu.neu.coe.info6205.sortEssentials;
 
-import edu.neu.coe.info6205.sortEssentials.Helper;
 
-import edu.neu.coe.info6205.util.Utilities;
 
 import java.text.Collator;
 import java.util.Random;
-import java.util.function.Function;
 
 public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
 
@@ -77,18 +74,18 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
         return v.compareTo(w);
     }
 
-    /**
-     * Swap the elements of array a at indices i and j.
-     *
-     * @param xs the array.
-     * @param i  one of the indices.
-     * @param j  the other index.
-     */
-    public void swap(X[] xs, int i, int j) {
-        X temp = xs[i];
-        xs[i] = xs[j];
-        xs[j] = temp;
-    }
+//    /**
+//     * Swap the elements of array a at indices i and j.
+//     *
+//     * @param xs the array.
+//     * @param i  one of the indices.
+//     * @param j  the other index.
+//     */
+//    public void swap(X[] xs, int i, int j) {
+//        X temp = xs[i];
+//        xs[i] = xs[j];
+//        xs[j] = temp;
+//    }
 
     /**
      * Method to perform a stable swap using half-exchanges,
@@ -100,6 +97,7 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
      * @param i  the index of the destination of xs[j].
      * @param j  the index of the right-most element to be involved in the swap.
      */
+    @Override
     public void swapInto(X[] xs, int i, int j) {
         if (j > i) {
             X x = xs[j];
@@ -121,11 +119,11 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
         return result;
     }
 
-    public X[] random(Class<X> clazz, Function<Random, X> f) {
-        if (n <= 0) throw new HelperException("Helper.random: not initialized");
-        randomArray = Utilities.fillRandomArray(clazz, random, n, f);
-        return randomArray;
-    }
+//    public X[] random(Class<X> clazz, Function<Random, X> f) {
+//        if (n <= 0) throw new HelperException("Helper.random: not initialized");
+//        randomArray = Utilities.fillRandomArray(clazz, random, n, f);
+//        return randomArray;
+//    }
 
     /**
      * Method to post-process the array xs after sorting.
@@ -215,12 +213,6 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
         this(description, 0 );
     }
 
-    public static final String INSTRUMENT = "instrument";
-
-    /**
-     * Keep track of the random array that was generated. This is available via the InstrumentedHelper class.
-     */
-    protected X[] randomArray;
 
     public static class HelperException extends RuntimeException {
 

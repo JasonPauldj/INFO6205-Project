@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class QuickSortTest {
 
     @Test
-    public void testSort() throws Exception {
+    public void testSortBasic() throws Exception {
         Integer[] xs = new Integer[4];
         xs[0] = 3;
         xs[1] = 4;
@@ -34,11 +34,11 @@ public class QuickSortTest {
     }
 
     @Test
-    public void testSort1() throws Exception {
-        String[] input = new String[10];
+    public void testSortRandom() throws Exception {
+        String[] input = new String[100];
         Random random = new Random();
-        QuickSort_DualPivot<String> s = new QuickSort_DualPivot<String>("QuickSort", 10);
-        for( int i = 0 ; i < 10 ; i++){
+        QuickSort_DualPivot<String> s = new QuickSort_DualPivot<String>("QuickSort", 100);
+        for( int i = 0 ; i < 100 ; i++){
             int val = random.nextInt(300);
             input[i] = String.valueOf(val);
         }
@@ -49,36 +49,52 @@ public class QuickSortTest {
     }
 
     @Test
-    public  void testSort3(){
+    public  void testSortChineseBasic(){
         String[] input = "阿兵 阿安 阿冰冰 阿斌 阿滨 阿冰 阿彬".split(" ");
         String[] expected = "阿安 阿彬 阿斌 阿滨 阿兵 阿冰 阿冰冰".split(" ");
         QuickSort_DualPivot<String> s = new QuickSort_DualPivot<String>("QuickSort", 10);
-         s.sortBuiltInCollator(input,0,input.length,Collator.getInstance(Locale.CHINA));
-        Arrays.sort(input, Collator.getInstance(Locale.CHINA));
+         s.sort(input,false,Collator.getInstance(Locale.CHINESE));
+        Arrays.sort(input, Collator.getInstance(Locale.CHINESE));
         assertArrayEquals(expected, input);
     }
 
     @Test
-    public void testSort4() throws IOException {
-        FileUtil fu= new FileUtil("/Users/jasonpauldarivemula/Desktop/INFO6205-Project/src/main/RandomString/Chinese/shuffledChinese.txt");
+    public void testSorInBuiltCollator(){
+        FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
         String[] input = fu.read();
-        FileUtil fo = new FileUtil("/Users/jasonpauldarivemula/Desktop/INFO6205-Project/src/main/RandomString/Chinese/sortedChinese.txt");
+        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/sortedChinese.txt");
+        String[] expected = fo.read();
+
+        QuickSort_DualPivot<String> s = new QuickSort_DualPivot<>("QuickSort", input.length);
+
+        s.sort(input,false, Collator.getInstance(Locale.CHINESE));
+
+        assertArrayEquals(expected,input);
+    }
+
+    @Test
+    public void testSortIBMCollator() throws IOException {
+        FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
+        String[] input = fu.read();
+        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/IBMsortedChinese.txt");
         String[] expected = fo.read();
         QuickSort_DualPivot<String> s = new QuickSort_DualPivot<>("QuickSort", input.length);
-//        String[] sortedInBuilt = s.sort(input,true, Collator.getInstance(Locale.CHINA));
-        String[] sortedIBMColl = s.sort(input,true, com.ibm.icu.text.Collator.getInstance(Locale.CHINA));
-//        FileUtil fw = new FileUtil();
-//        fw.writeAsCsv(Arrays.asList(sortedIBMColl));
-        String filepath = "/Users/jasonpauldarivemula/Desktop/INFO6205-Project/src/main/RandomString/Chinese/IBMsortedChinese.txt";
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filepath,true));
 
-        for (String st: sortedIBMColl) {
-            writer.write(st);
-            writer.newLine();
-        }
-        writer.close();
+        s.sort(input,false, com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
+        assertArrayEquals(expected, input);
+//        FileUtil fw = new FileUtil();
+//        fw.writeAsCsv(Arrays.asList(sortedIBMColl))
+//
+//        String filepath = "src/main/SortedString/Chinese/IBMsortedChinese.txt";
+//        BufferedWriter writer = new BufferedWriter(new FileWriter(filepath,true));
+//
+//        for (String st: sortedIBMColl) {
+//            writer.write(st);
+//            writer.newLine();
+//        }
+//        writer.close();
 //        assertArrayEquals(expected,sortedInBuilt);
-       assertArrayEquals(expected, sortedIBMColl);
+
 // 阿安, 阿彬, 阿斌, 阿滨, 阿冰, 阿冰冰, 阿兵, 阿婵, 阿超( IBM Collator)
 // 阿安, 阿彬, 阿斌, 阿滨, 阿兵, 阿冰, 阿冰冰 (Local.China)
 

@@ -4,6 +4,7 @@
 package edu.neu.coe.info6205.sortEssentials.huskySort;
 
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
+import edu.neu.coe.info6205.util.Benchmark;
 
 import java.text.Collator;
 import java.util.Arrays;
@@ -90,8 +91,14 @@ public final class QuickHuskySort<X extends Comparable<X>> extends AbstractHusky
      */
     public void sort(X[] xs, int from, int to) {
         generateLongs(xs);
+        //Benchmark<X[]> bm_HuskySort = new Benchmark<X[]>("timing husky sort",(X[] arr) -> quickSort(arr, getHelper().getLongs(), from, to - 1));
+        //System.out.println("Time taken for husky sort " + bm_HuskySort.run(xs,1));
         quickSort(xs, getHelper().getLongs(), from, to - 1);
+
+        //Benchmark<X[]> bm_PostSort = new Benchmark<X[]>("timing post sort in husky sort",(X[] arr) -> postSort(arr));
+        //System.out.println("Time taken for post sort " + bm_PostSort.run(xs,1));
         postSort(xs);
+
     }
 
     @Override

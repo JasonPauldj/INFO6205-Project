@@ -5,7 +5,6 @@ package edu.neu.coe.info6205.sortEssentials;
 
 import java.text.Collator;
 import java.util.Arrays;
-//import com.ibm.icu.*;
 
 public interface Sort<X> {
 
@@ -19,7 +18,7 @@ public interface Sort<X> {
     void sort(X[] xs, int from, int to);
 
     /**
-     * Generic, mutating sort method which operates on a sub-array.
+     * Generic, mutating sort method which operates on a sub-array and takes the java inbuilt collator.
      *
      * @param xs   sort the array xs from "from" until "to" (exclusive of to).
      * @param from the index of the first element to sort.
@@ -29,7 +28,7 @@ public interface Sort<X> {
     void sortBuiltInCollator(X[] xs, int from, int to, Collator cl);
 
     /**
-     * Generic, mutating sort method which operates on a sub-array.
+     * Generic, mutating sort method which operates on a sub-array and takes the IBM collator.
      *
      * @param xs   sort the array xs from "from" until "to" (exclusive of to).
      * @param from the index of the first element to sort.
@@ -39,17 +38,17 @@ public interface Sort<X> {
     void sortIBMCollator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl);
 
     /**
-     * Method to prepare for sorting, invoked by the default implementation of sort(X[], boolean).
+     * This method is to be used only with Husky Sort. This method is overriden in the Husky sort implementations.
      * The default method invokes init with the length of the array xs then makes a copy of the array if appropriate.
      *
      * @param xs       the original array to be sorted.
      * @param makeCopy true if we need to work on a copy of the array.
      * @return either the original or a copy of the array.
      */
-    default X[] preSort(X[] xs, boolean makeCopy) {
-        init(xs.length);
-        return makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
-    }
+//    default X[] preSort(X[] xs, boolean makeCopy) {
+//        init(xs.length);
+//        return makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
+//    }
 
     /**
      * Generic, non-mutating sort method which allows for explicit determination of the makeCopy option.
@@ -69,7 +68,7 @@ public interface Sort<X> {
      *
      * @param xs       sort the array xs, returning the sorted result, leaving xs unchanged.
      * @param makeCopy if set to true, we make a copy first and sort that.
-     * @param cl passing a collator
+     * @param cl passing java inbuilt collator
      */
     default X[] sort(X[] xs, boolean makeCopy, Collator cl) {
         init(xs.length);
@@ -83,7 +82,7 @@ public interface Sort<X> {
      *
      * @param xs       sort the array xs, returning the sorted result, leaving xs unchanged.
      * @param makeCopy if set to true, we make a copy first and sort that.
-     * @param cl passing a collator
+     * @param cl passing IBM Collator
      */
     default X[] sort(X[] xs, boolean makeCopy, com.ibm.icu.text.Collator cl) {
         init(xs.length);

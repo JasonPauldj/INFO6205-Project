@@ -11,6 +11,7 @@ import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyHelper;
 
 import edu.neu.coe.info6205.util.LazyLogger;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 /**
@@ -35,10 +36,12 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
      * @param makeCopy true if we need to work on a copy of the array.
      * @return the xs or a copy.
      */
-    @Override
+
     public final X[] preSort(final X[] xs, final boolean makeCopy) {
         // NOTE: Prepare for first pass where we code to longs and sort according to those.
-        final X[] result = super.preSort(xs, makeCopy);
+        init(xs.length);
+       // final X[] result = super.preSort(xs, makeCopy);
+        final X[] result  =makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
         huskyHelper.doCoding(result);
         sort(result,0, result.length);
         return result;

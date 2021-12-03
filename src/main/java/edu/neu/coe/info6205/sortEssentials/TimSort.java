@@ -3,6 +3,8 @@ package edu.neu.coe.info6205.sortEssentials;
 
 
 
+import edu.neu.coe.info6205.util.Benchmark;
+
 import java.io.IOException;
 import java.text.Collator;
 import java.util.Arrays;
@@ -48,6 +50,10 @@ public class TimSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
     @Override
     public void sortIBMCollator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl) {
+
+//        Benchmark<X[]> bm_timSort = new Benchmark<X[]>("timing tim sort",(X[] arr) -> Arrays.sort(arr,from,to,cl));
+//        System.out.println("Time taken for tim sort "+ bm_timSort.run(xs,1));
+
         Arrays.sort(xs,from,to,cl);
     }
 
