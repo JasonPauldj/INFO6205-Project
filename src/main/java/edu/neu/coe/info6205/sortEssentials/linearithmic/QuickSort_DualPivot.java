@@ -95,18 +95,6 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
             int lt = lo + 1;
             int gt = hi - 1;
             int i = lt;
-            // NOTE: we are trying to avoid checking on instrumented for every time in the inner loop for performance reasons (probably a silly idea).
-            // NOTE: if we were using Scala, it would be easy to set up a comparer function and a swapper function. With java, it's possible but much messier.
-           /* if (helper.instrumented()) {
-                while (i <= gt) {
-                    if (helper.compare(xs, i, lo) < 0) helper.swap(xs, lt++, i++);
-                    else if (helper.compare(xs, i, hi) > 0) helper.swap(xs, i, gt--);
-                    else i++;
-                }
-                helper.swap(xs, lo, --lt);
-                helper.swap(xs, hi, ++gt);
-            } else*/
-
             {
                 while (i <= gt) {
                     X x = xs[i];
@@ -143,18 +131,6 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
             int lt = lo + 1;
             int gt = hi - 1;
             int i = lt;
-            // NOTE: we are trying to avoid checking on instrumented for every time in the inner loop for performance reasons (probably a silly idea).
-            // NOTE: if we were using Scala, it would be easy to set up a comparer function and a swapper function. With java, it's possible but much messier.
-           /* if (helper.instrumented()) {
-                while (i <= gt) {
-                    if (helper.compare(xs, i, lo) < 0) helper.swap(xs, lt++, i++);
-                    else if (helper.compare(xs, i, hi) > 0) helper.swap(xs, i, gt--);
-                    else i++;
-                }
-                helper.swap(xs, lo, --lt);
-                helper.swap(xs, hi, ++gt);
-            } else*/
-
             {
                 while (i <= gt) {
                     X x = xs[i];
@@ -179,7 +155,6 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
             return partitions;
         }
 
-        // CONSIDER invoke swap in BaseHelper.
         private void swap(X[] ys, int i, int j) {
             X temp = ys[i];
             ys[i] = ys[j];

@@ -1,0 +1,111 @@
+/**** ENGLISH STRINGS ****/
+Quick Sort Dual Pivot took 12.996939990000001 time to sort 15625 strings
+Quick Sort Dual Pivot took 9.59922752 time to sort 31250 strings
+Quick Sort Dual Pivot took 19.73408131 time to sort 62500 strings
+Quick Sort Dual Pivot took 53.84545949 time to sort 125000 strings
+Quick Sort Dual Pivot took 123.40159116000001 time to sort 250000 strings
+Quick Sort Dual Pivot took 308.92909941 time to sort 500000 strings
+Quick Sort Dual Pivot took 744.9933485299999 time to sort 1000000 strings
+Quick Sort Dual Pivot took 720.1873312499999 time to sort 2000000 strings
+Tim Sort took 5.7700805200000005 time to sort 15625 strings
+Tim Sort took 8.81633191 time to sort 31250 strings
+Tim Sort took 20.63617085 time to sort 62500 strings
+Tim Sort took 50.782439999999994 time to sort 125000 strings
+Tim Sort took 118.15968065999999 time to sort 250000 strings
+Tim Sort took 263.48641986 time to sort 500000 strings
+Tim Sort took 621.8781506500001 time to sort 1000000 strings
+Tim Sort took 631.22042511 time to sort 2000000 strings
+Quick Husky Sort took 3.2527929799999997 time to sort 15625 strings
+Quick Husky Sort took 6.780855249999999 time to sort 31250 strings
+Quick Husky Sort took 17.88101981 time to sort 62500 strings
+Quick Husky Sort took 43.80316783999999 time to sort 125000 strings
+Quick Husky Sort took 115.02488543 time to sort 250000 strings
+Quick Husky Sort took 270.96465312 time to sort 500000 strings
+Quick Husky Sort took 594.88593016 time to sort 1000000 strings
+Quick Husky Sort took 585.08486512 time to sort 2000000 strings
+LSD Sort took 1.6005736 time to sort 15625 strings
+LSD Sort took 3.81122032 time to sort 31250 strings
+LSD Sort took 18.763840520000002 time to sort 62500 strings
+LSD Sort took 68.71808407 time to sort 125000 strings
+LSD Sort took 342.49349355 time to sort 250000 strings
+LSD Sort took 903.5052577399999 time to sort 500000 strings
+LSD Sort took 2008.75669275 time to sort 1000000 strings
+LSD Sort took 1873.59196245 time to sort 2000000 strings
+MSD Sort took 1.59684114 time to sort 15625 strings
+MSD Sort took 3.05648162 time to sort 31250 strings
+MSD Sort took 8.33072188 time to sort 62500 strings
+MSD Sort took 23.8026744 time to sort 125000 strings
+MSD Sort took 56.25233763 time to sort 250000 strings
+MSD Sort took 118.14034955 time to sort 500000 strings
+MSD Sort took 318.86713354 time to sort 1000000 strings
+MSD Sort took 288.06264125 time to sort 2000000 strings
+Pure Husky Sort took 2.77954125 time to sort 15625 strings
+Pure Husky Sort took 6.18640021 time to sort 31250 strings
+Pure Husky Sort took 11.638936309999998 time to sort 62500 strings
+Pure Husky Sort took 29.41506606 time to sort 125000 strings
+Pure Husky Sort took 89.44368037 time to sort 250000 strings
+Pure Husky Sort took 182.32118578 time to sort 500000 strings
+Pure Husky Sort took 440.11936857 time to sort 1000000 strings
+Pure Husky Sort took 464.33426073000004 time to sort 2000000 strings
+
+/**** CHINESE STRINGS ****/
+
+Quick Sort Dual Pivot took 248.91660659999997 ms to sort 15625 ch strings
+Quick Sort Dual Pivot took 581.98282305 ms to sort 31250 ch strings
+Quick Sort Dual Pivot took 1011.4749291 ms to sort 62500 ch strings
+Quick Sort Dual Pivot took 1465.1965057 ms to sort 125000 ch strings
+Quick Sort Dual Pivot took 1872.6087868 ms to sort 250000 ch strings
+Quick Sort Dual Pivot took 4080.6782389499995 ms to sort 500000 ch strings
+Quick Sort Dual Pivot took 9174.621854 ms to sort 1000000 ch strings
+Quick Sort Dual Pivot took 19987.800185199998 ms to sort 2000000 ch strings
+Quick Sort Dual Pivot took 43880.8146099 ms to sort 4000000 ch strings
+Tim Sort took 68.80313355 ms to sort 15625 ch strings
+Tim Sort took 139.86606784999998 ms to sort 31250 ch strings
+Tim Sort took 306.54005655000003 ms to sort 62500 ch strings
+Tim Sort took 674.97903065 ms to sort 125000 ch strings
+Tim Sort took 1487.09198105 ms to sort 250000 ch strings
+Tim Sort took 3240.2936317 ms to sort 500000 ch strings
+Tim Sort took 7049.3298125 ms to sort 1000000 ch strings
+Tim Sort took 15867.99131465 ms to sort 2000000 ch strings
+Tim Sort took 33506.47416765 ms to sort 4000000 ch strings
+Quick Husky Sort took 40.31728255 ms to sort 15625 ch strings
+Quick Husky Sort took 84.569402 ms to sort 31250 ch strings
+Quick Husky Sort took 180.3907964 ms to sort 62500 ch strings
+Quick Husky Sort took 385.8999837 ms to sort 125000 ch strings
+Quick Husky Sort took 861.82137905 ms to sort 250000 ch strings
+MSD Sort took 1084.2341903333333 ms to sort 15625 ch strings
+MSD Sort took 2135.1531486666668 ms to sort 31250 ch strings
+MSD Sort took 4476.656293333333 ms to sort 62500 ch strings
+MSD Sort took 3847.8528380000002 ms to sort 125000 ch strings
+MSD Sort took 8272.206275666666 ms to sort 250000 ch strings
+MSD Sort took 18047.102250333333 ms to sort 500000 ch strings
+MSD Sort took 40585.05737466667 ms to sort 1000000 ch strings
+MSD Sort took 69643.906693 ms to sort 2000000 ch strings
+MSD Sort took 135062.785755 ms to sort 4000000 ch strings
+Quick Husky Sort took 2035.3322464 ms to sort 500000 ch strings
+Quick Husky Sort took 4439.0515918 ms to sort 1000000 ch strings
+Quick Husky Sort took 9641.259589 ms to sort 2000000 ch strings
+Quick Husky Sort took 21908.816780200003 ms to sort 4000000 ch strings
+
+Pure Husky Sort took 132.4269146 ms to sort 15625 ch strings
+Pure Husky Sort took 169.04979020000002 ms to sort 31250 ch strings
+Pure Husky Sort took 216.04414820000002 ms to sort 62500 ch strings
+Pure Husky Sort took 441.4615976 ms to sort 125000 ch strings
+Pure Husky Sort took 892.6188224 ms to sort 250000 ch strings
+Pure Husky Sort took 1999.334747 ms to sort 500000 ch strings
+Pure Husky Sort took 6814.024119600001 ms to sort 1000000 ch strings
+Pure Husky Sort took 9553.9569804 ms to sort 2000000 ch strings
+Pure Husky Sort took 21478.6957862 ms to sort 4000000 ch strings
+LSD Sort took 1566.7656976 ms to sort 15625 ch strings
+LSD Sort took 3081.1227848 ms to sort 31250 ch strings
+LSD Sort took 6288.4378272 ms to sort 62500 ch strings
+LSD Sort took 12617.6458342 ms to sort 125000 ch strings
+LSD Sort took 10034.4549092 ms to sort 250000 ch strings
+LSD Sort took 20494.3893424 ms to sort 500000 ch strings
+LSD Sort took 41230.3507392 ms to sort 1000000 ch strings
+LSD Sort took 83919.6739904 ms to sort 2000000 ch strings
+LSD Sort took 169679.0613812 ms to sort 4000000 ch strings
+Pure Husky Sort took 206.8780298 ms to sort 15625 ch strings
+Pure Husky Sort took 183.53694760000002 ms to sort 31250 ch strings
+Pure Husky Sort took 223.89633480000003 ms to sort 62500 ch strings
+Pure Husky Sort took 579.9105878 ms to sort 125000 ch strings

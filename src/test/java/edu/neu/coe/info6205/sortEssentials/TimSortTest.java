@@ -43,9 +43,11 @@ public class TimSortTest {
     @Test
     public void testSorInBuiltCollator(){
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-        String[] input = fu.read();
-        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/sortedChinese.txt");
-        String[] expected = fo.read();
+        String[] input = fu.read(100);
+
+        String[] expected = Arrays.copyOf(input,input.length);
+        Arrays.sort(expected,java.text.Collator.getInstance(Locale.CHINESE));
+
         try {
             new TimSort<String>().sort(input,false, java.text.Collator.getInstance(Locale.CHINESE));
         } catch (Exception e) {
@@ -58,9 +60,9 @@ public class TimSortTest {
     @Test
     public void testSortIBMCollator(){
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-        String[] input = fu.read();
-        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/IBMsortedChinese.txt");
-        String[] expected = fo.read();
+        String[] input = fu.read(100);
+        String[] expected = Arrays.copyOf(input,input.length);
+        Arrays.sort(expected,Collator.getInstance(Locale.CHINESE));
         try {
             new TimSort<String>().sort(input,false, Collator.getInstance(Locale.CHINESE));
         } catch (Exception e) {

@@ -36,6 +36,7 @@ public class MSDStringSortCollator {
 
     /**
      * Sort from a[lo] to a[hi] (exclusive), ignoring the first d characters of each String.
+     * Using a collator to determine the sort order.
      * This method is recursive.
      *
      * @param a  the array to be sorted.
@@ -48,16 +49,12 @@ public class MSDStringSortCollator {
         if (hi <= lo + cutoff)
             InsertionSortMSD.sort(a, lo, hi, d, cl);
         else {
-            if (lo >= hi - 1)
-                return;
 
             Map<String, Integer> map;
             if (cl == null)
                 map = new TreeMap<>(Comparator.comparingInt(Integer::valueOf));
             else
                 map = new TreeMap<>(cl);
-            //            int[] count = new int[radix + 2];
-
             // Compute frequency counts.
             for (int i = lo; i < hi; i++) {
                 String key = (cl == null) ? String.valueOf(charAt(a[i], d)) : strCharAt(a[i], d);
@@ -65,11 +62,7 @@ public class MSDStringSortCollator {
                 map.put(key, map.get(key) + 1);
             }
 
-//            System.out.println(map.toString());
 
-//                count[charAt(a[i], d) + 2]++;
-//            for (int r = 0; r < radix + 1; r++)      // Transform counts to indices.
-//                count[r + 1] += count[r];
             //Transforming counts to ending indices of each key
             List<String> keySet = new ArrayList<>(map.keySet());
 
@@ -87,14 +80,6 @@ public class MSDStringSortCollator {
                 prevKeyCount = cnt;
             }
 
-//            System.out.println(map.toString());
-//            for (int i = lo; i < hi; i++){ // Distribute.
-//                String key = String.valueOf(charAt(a[i], d) + 1);
-//                map.putIfAbsent(key,0);
-//                map.put(key,map.get(key)+1);
-//                aux[map.get(key)]  = a[i];
-////                aux[count[]++] = a[i];
-//            }
             // Distribute.
             for (int i = lo; i < hi; i++) {
                 String key = (cl == null) ? String.valueOf(charAt(a[i], d)) : strCharAt(a[i], d);
@@ -107,37 +92,34 @@ public class MSDStringSortCollator {
                 map.put(key, map.get(key) + 1);
             }
 
-//                aux[count[charAt(a[i], d) + 1]++] = a[i];
             // Copy back.
             if (hi - lo >= 0) System.arraycopy(aux, 0, a, lo, hi - lo);
 
-//            System.out.println(map);
 
-            // Recursively sort for each character value.
+
             // int hiInd;
             if (keySet.get(0) != "-1") {
-                ////UNSTABLE SORT.
+                sort(a, lo, lo + map.get(keySet.get(0)), d + 1, cl);
+
+                //UNSTABLE SORT.
                 // hiInd=(keySet.size()==1) ? hi : lo+map.get(keySet.get(1));
                 // sort(a, lo + map.get(keySet.get(0)), hiInd, d + 1, cl);
 
-                sort(a, lo, lo + map.get(keySet.get(0)), d + 1, cl);
-
             }
+            // Recursively sort for each character value.
             for (int r = 1; r < keySet.size(); r++) {
+                sort(a, lo + map.get(keySet.get(r - 1)), lo + map.get(keySet.get(r)), d + 1, cl);
+
                 //UNSTABlE SORT
                 // hiInd = (r == keySet.size() - 1) ? hi : lo + map.get(keySet.get(r + 1));
                 // sort(a, lo + map.get(keySet.get(r)), hiInd, d + 1, cl);
-
-                sort(a, lo + map.get(keySet.get(r - 1)), lo + map.get(keySet.get(r)), d + 1, cl);
             }
-//            for(int r=0; r < radix;r++){
-//                sort(a,lo+count[r],lo+count[r+1],d+1);
-//            }
         }
     }
 
     /**
      * Sort from a[lo] to a[hi] (exclusive), ignoring the first d characters of each String.
+     * Using a collator to determine the sort order.
      * This method is recursive.
      *
      * @param a  the array to be sorted.
@@ -147,9 +129,10 @@ public class MSDStringSortCollator {
      * @param cl the java IBM collator
      */
     private static void sort(String[] a, int lo, int hi, int d, com.ibm.icu.text.Collator cl) {
-        if (hi <= lo + cutoff)
-            InsertionSortMSD.sort(a, lo, hi, d, cl);
-        else {
+//        if (hi <= lo + cutoff)
+//            InsertionSortMSD.sort(a, lo, hi, d, cl);
+//        else
+           {
             if (lo >= hi - 1)
                 return;
 
@@ -235,7 +218,6 @@ public class MSDStringSortCollator {
         else return String.valueOf(-1);
     }
 
-    //private static final int radix = 256;
     private static final int cutoff = 15;
     private static String[] aux;       // auxiliary array for distribution
 }

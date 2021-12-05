@@ -61,10 +61,9 @@ public class QuickSortTest {
     @Test
     public void testSorInBuiltCollator(){
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-        String[] input = fu.read();
-        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/sortedChinese.txt");
-        String[] expected = fo.read();
-
+        String[] input = fu.read(100);
+        String[] expected = Arrays.copyOf(input,input.length);
+        Arrays.sort(expected,Collator.getInstance(Locale.CHINESE));
         QuickSort_DualPivot<String> s = new QuickSort_DualPivot<>("QuickSort", input.length);
 
         s.sort(input,false, Collator.getInstance(Locale.CHINESE));
@@ -75,30 +74,12 @@ public class QuickSortTest {
     @Test
     public void testSortIBMCollator() throws IOException {
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-        String[] input = fu.read();
-        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/IBMsortedChinese.txt");
-        String[] expected = fo.read();
+        String[] input = fu.read(100);
+        String[] expected = Arrays.copyOf(input,input.length);
+        Arrays.sort(expected,com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
         QuickSort_DualPivot<String> s = new QuickSort_DualPivot<>("QuickSort", input.length);
-
         s.sort(input,false, com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
         assertArrayEquals(expected, input);
-//        FileUtil fw = new FileUtil();
-//        fw.writeAsCsv(Arrays.asList(sortedIBMColl))
-//
-//        String filepath = "src/main/SortedString/Chinese/IBMsortedChinese.txt";
-//        BufferedWriter writer = new BufferedWriter(new FileWriter(filepath,true));
-//
-//        for (String st: sortedIBMColl) {
-//            writer.write(st);
-//            writer.newLine();
-//        }
-//        writer.close();
-//        assertArrayEquals(expected,sortedInBuilt);
-
-// 阿安, 阿彬, 阿斌, 阿滨, 阿冰, 阿冰冰, 阿兵, 阿婵, 阿超( IBM Collator)
-// 阿安, 阿彬, 阿斌, 阿滨, 阿兵, 阿冰, 阿冰冰 (Local.China)
-
-
     }
 
 }

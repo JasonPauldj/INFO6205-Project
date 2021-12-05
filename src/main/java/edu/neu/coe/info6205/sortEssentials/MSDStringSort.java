@@ -39,8 +39,7 @@ public class MSDStringSort {
                 aux[count[charAt(a[i], d) + 1]++] = a[i];
             // Copy back.
             if (hi - lo >= 0) System.arraycopy(aux, 0, a, lo, hi - lo);
-            // Recursively sort for each character value.
-            // TO BE IMPLEMENTED
+
             for (int r = 0; r < radix; r++) {
                 sort(a, lo + count[r], lo + count[r + 1], d + 1);
             }

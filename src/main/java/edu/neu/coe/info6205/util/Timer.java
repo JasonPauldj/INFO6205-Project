@@ -5,7 +5,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-//TODO: add logger to class
 public class Timer {
 
     /**

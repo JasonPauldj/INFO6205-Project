@@ -18,7 +18,8 @@ public abstract class SortWithHelper<X extends Comparable<X>> implements Sort<X>
     }
 
     public SortWithHelper(String description, int N) {
-        this(BaseHelper.getHelper());
+        //this(BaseHelper.getHelper());
+        this(new BaseHelper<>(description));
     }
 
     /**
@@ -40,27 +41,6 @@ public abstract class SortWithHelper<X extends Comparable<X>> implements Sort<X>
         getHelper().init(n);
     }
 
-    /**
-     * Perform pre-processing step for this Sort.
-     *
-     * @param xs the elements to be pre-processed.
-     */
-    @Override
-    public X[] preProcess(X[] xs) {
-        return helper.preProcess(xs);
-    }
-
-    /**
-     * Method to post-process an array after sorting.
-     * <p>
-     * In this implementation, we delegate the post-processing to the helper.
-     *
-     * @param xs the array to be post-processed.
-     */
-    @Override
-    public void postProcess(X[] xs) {
-        helper.postProcess(xs);
-    }
 
     @Override
     public String toString() {

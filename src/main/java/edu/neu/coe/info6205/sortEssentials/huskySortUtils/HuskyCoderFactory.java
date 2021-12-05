@@ -44,15 +44,6 @@ public final class HuskyCoderFactory {
     private static final int MAX_LENGTH_UTF8 = BITS_LONG / BIT_WIDTH_UTF8;
     private static final int MASK_UTF8 = MASK_BYTE;
 
-    /**
-     * Method to create a generic HuskyCoder for a class which is HuskySortable.
-     *
-     * @param <X> a class which is HuskySortable.
-     * @return a HuskyCoder&lt;X&gt;.
-     */
-    public static <X extends HuskySortable<X>> HuskyCoder<X> createGenericCoder() {
-        return HuskySortable::huskyCode;
-    }
 
     /**
      * A Husky Coder for ASCII Strings.
@@ -125,25 +116,6 @@ public final class HuskyCoderFactory {
     };
 
     /**
-     * A Husky Coder for unicode Strings.
-     */
-    public final static HuskySequenceCoder<String> chineseCoder = new BaseHuskySequenceCoder<String>("Unicode", MAX_LENGTH_UNICODE - 1, Collator.getInstance(Locale.CHINESE.CHINESE)) {
-        /**
-         * Encode x as a long.
-         * As much as possible, if x > y, huskyEncode(x) > huskyEncode(y).
-         * If this cannot be guaranteed, then the result of imperfect(z) will be true.
-         *
-         * @param str the X value to encode.
-         * @return a long which is, as closely as possible, monotonically increasing with the domain of X values.
-         */
-        public long huskyEncode(final String str) {
-            String ck= new String(getCollationKeyByteArray(str));
-            return unicodeToLong(ck);
-        }
-    };
-
-
-    /**
      * A Husky Coder for UTF Strings.
      */
     public final static HuskySequenceCoder<String> utf8Coder = new BaseHuskySequenceCoder<String>("UTF8", 0) {
@@ -163,161 +135,12 @@ public final class HuskyCoderFactory {
     /**
      * A Husky Coder for Dates.
      */
-    public final static HuskyCoder<Date> dateCoder = new HuskyCoder<Date>() {
-        /**
-         * Encode x as a long.
-         * As much as possible, if x > y, huskyEncode(x) > huskyEncode(y).
-         * If this cannot be guaranteed, then the result of imperfect(z) will be true.
-         *
-         * @param date the Date value to encode.
-         * @return a long which is, as closely as possible, monotonically increasing with the domain of X values.
-         */
-        public long huskyEncode(final Date date) {
-            return date.getTime();
-        }
 
-        /**
-         * Method to determine if this Husky Coder is perfect for all Dates.
-         *
-         * @return true.
-         */
-        @Override
-        public boolean perfect() {
-            return true;
-        }
-    };
 
-    /**
-     * A Husky Coder for ChronoLocalDateTimes.
-     */
-    public final static HuskyCoder<ChronoLocalDateTime<?>> chronoLocalDateTimeCoder = new HuskyCoder<ChronoLocalDateTime<?>>() {
-        @Override
-        public long huskyEncode(final ChronoLocalDateTime<?> x) {
-            return x.toEpochSecond(ZoneOffset.UTC);
-        }
-
-        /**
-         * Method to determine if this Husky Coder is perfect for all ChronoLocalDateTimes.
-         *
-         * @return true.
-         */
-        @Override
-        public boolean perfect() {
-            return true;
-        }
-    };
-
-    /**
-     * A Husky Coder for Doubles.
-     */
-    public final static HuskyCoder<Double> doubleCoder = HuskyCoderFactory::doubleToLong;
-
-    /**
-     * A Husky Coder for Integers.
-     */
-    public final static HuskyCoder<Integer> integerCoder = new HuskyCoder<Integer>() {
-        @Override
-        public long huskyEncode(final Integer x) {
-            return x.longValue();
-        }
-
-        /**
-         * Method to determine if this Husky Coder is perfect for a class of objects (Integer).
-         *
-         * @return true.
-         */
-        @Override
-        public boolean perfect() {
-            return true;
-        }
-    };
-
-    /**
-     * A Husky Coder for Longs.
-     */
-    public final static HuskyCoder<Long> longCoder = new HuskyCoder<Long>() {
-        @Override
-        public long huskyEncode(final Long x) {
-            return x;
-        }
-
-        /**
-         * Method to determine if this Husky Coder is perfect for a class of objects (Long).
-         *
-         * @return true.
-         */
-        @Override
-        public boolean perfect() {
-            return true;
-        }
-    };
-
-    /**
-     * Method to yield a probabilistic encoder based on the given probability p of coding errors.
-     *
-     * @param p   the probability that there will be a coding error.
-     * @param <X> the type of Number to be encoded.
-     * @return a long.
-     */
-    public static <X extends Number & Comparable<X>> ProbabilisticEncoder<X> createProbabilisticCoder(final double p) {
-        return new ProbabilisticEncoder<X>(p) {
-        };
-    }
-
-    /**
-     * Abstract class which implements a probabilistic encoder on generic type X.
-     * <p>
-     * TODO: this only works correctly for where X is Byte -- need to generalize.
-     *
-     * @param <X> the type of the input to huskyEncode.
-     */
-    static abstract class ProbabilisticEncoder<X extends Number & Comparable<X>> implements HuskyCoder<X> {
-        @Override
-        public long huskyEncode(final X x) {
-            final long longValue = x.longValue();
-            return longValue ^ (isEvent() ? 0xFFFFFFFFFFFFFFFFL : 0);
-        }
-
-        public ProbabilisticEncoder(final double p, final long seed) {
-            this.p = p;
-            this.random = new Random(seed);
-        }
-
-        public ProbabilisticEncoder(final double p) {
-            this(p, System.currentTimeMillis());
-        }
-
-        private final double p;
-
-        boolean isEvent() {
-            return random.nextDouble() < p;
-        }
-
-        private final Random random;
-    }
 
     /**
      * A Husky Coder for BigIntegers.
      */
-    public final static HuskyCoder<BigInteger> bigIntegerCoder = x -> doubleToLong(x.doubleValue());
-
-    /**
-     * A Husky Coder for BigDecimals.
-     */
-    public final static HuskyCoder<BigDecimal> bigDecimalCoder = BigDecimal::longValue;
-
-    /**
-     * A Husky Coder for scaled BigDecimals.
-     * NOTE: use this if you know that your range of BigDecimals is particularly large or small.
-     *
-     * @param scale the power of ten by which each BigDecimal will be increased before conversion to long.
-     *              Thus, if you have say numbers in the range 0 to 1, you might want to choose a scale of 18.
-     *              Alternatively, if your numbers are in the range -1E100 through 1aE100, you should choose a scale of -82.
-     * @return a HuskyCoder&lt;BigDecimal@gt;
-     */
-    public static HuskyCoder<BigDecimal> scaledBigDecimalCoder(final int scale) {
-        return x -> x.movePointRight(scale).longValue();
-    }
 
     // CONSIDER making this private
     public static long asciiToLong(final String str) {
@@ -353,17 +176,6 @@ public final class HuskyCoderFactory {
         return result;
     }
 
-    // NOTE: this method seems considerably slower than stringToLong, even though it uses a Java library function (getBytes)
-    private static long stringToBytesToLong(final String str, final int maxLength, final Charset charSet, final int startingPos) {
-        final byte[] bytes = str.substring(0, Math.min(maxLength, str.length())).getBytes(charSet);
-        int bytesIndex = startingPos;
-        int resultIndex = 0;
-        long result = 0L;
-        for (; resultIndex < BYTES_LONG && bytesIndex < bytes.length; resultIndex++)
-            result = result << BITS_BYTE | bytes[bytesIndex++] & MASK_BYTE;
-        for (; resultIndex < BYTES_LONG; resultIndex++) result = result << BITS_BYTE;
-        return result;
-    }
 
     private static long englishToLong(final String str) {
         return stringToLong(str, MAX_LENGTH_ENGLISH, BIT_WIDTH_ENGLISH, MASK_ENGLISH);
@@ -416,17 +228,5 @@ public final class HuskyCoderFactory {
         return result;
     }
 
-    /**
-     * This method is required because doubleToLongBits does not increase monotonically with its input value.
-     *
-     * @param value a double.
-     * @return an appropriate long value.
-     */
-    private static long doubleToLong(final double value) {
-        final long doubleToLongBits = Double.doubleToLongBits(value);
-        final long sign = doubleToLongBits & 0x8000000000000000L;
-        final long result = doubleToLongBits & 0x7FFFFFFFFFFFFFFFL;
-        return sign == 0 ? result : -result;
-    }
 
 }

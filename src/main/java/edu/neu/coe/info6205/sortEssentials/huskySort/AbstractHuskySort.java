@@ -11,6 +11,7 @@ import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyHelper;
 
 import edu.neu.coe.info6205.util.LazyLogger;
 
+import java.text.Collator;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -43,7 +44,6 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
        // final X[] result = super.preSort(xs, makeCopy);
         final X[] result  =makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
         huskyHelper.doCoding(result);
-        sort(result,0, result.length);
         return result;
     }
 
@@ -63,10 +63,21 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         return xs;
     }
 
-    public X[] huskySort(X[] xs, boolean makeCopy) {
-        X[] result = preSort(xs,false);
-        sort(result, 0, result.length);
+    @Override
+    public X[] sort(X[] xs, boolean makeCopy) {
+        X[] result = preSort(xs,makeCopy);
+        sort(result,0, result.length);
         return result;
+    }
+
+    @Override
+    public X[] sort(X[] xs, boolean makeCopy, Collator cl) {
+       return sort(xs,makeCopy);
+    }
+
+    @Override
+    public X[] sort(X[] xs, boolean makeCopy, com.ibm.icu.text.Collator cl) {
+        return sort(xs,makeCopy);
     }
 
 
@@ -80,7 +91,6 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         return huskyHelper;
     }
 
-    // CONSIDER showing coder and postSorter (would need extra String for that).
     @Override
     public final String toString() {
         return name;
@@ -102,21 +112,13 @@ public abstract class AbstractHuskySort<X extends Comparable<X>> extends SortWit
         this(name, createHelper(name, n, huskyCoder, postSorter,false));
         closeHelper = true;
     }
-    /**
-     * Constructor for AbstractHuskySort
-     *
-     * @param name       name of sorter.
-     * @param n          number of elements expected.
-     * @param huskyCoder coder.
-     * @param postSorter post-sorter.
-     */
+
     protected AbstractHuskySort(final String name, final int n, final HuskyCoder<X> huskyCoder, final Consumer<X[]> postSorter, boolean makeCopy) {
         this(name, createHelper(name, n, huskyCoder, postSorter, makeCopy));
     }
 
     static final HuskyCoder<String> UNICODE_CODER = HuskyCoderFactory.unicodeCoder;
 
-    protected final static LazyLogger logger = new LazyLogger(AbstractHuskySort.class);
 
     /**
      * NOTE: callers of this method should consider arranging for the helper to be closed on close of the sorter.

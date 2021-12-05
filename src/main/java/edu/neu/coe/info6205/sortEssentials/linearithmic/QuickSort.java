@@ -48,44 +48,12 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      */
     @Override
     public X[] sort(X[] xs, boolean makeCopy) {
-        // CONSIDER merge with MergeSortBasic and maybe others.
         getHelper().init(xs.length);
         X[] result = makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
         sort(result, 0, result.length, 0);
         return result;
     }
 
-    /**
-     * Method to sort.
-     *
-     * @param xs       sort the array xs, returning the sorted result, leaving xs unchanged.
-     * @param makeCopy if set to true, we make a copy first and sort that.
-     * @return the result (sorted version of xs).
-     */
-    @Override
-    public X[] sort(X[] xs, boolean makeCopy, Collator cl) {
-        // CONSIDER merge with MergeSortBasic and maybe others.
-        getHelper().init(xs.length);
-        X[] result = makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
-        sortBuiltInCollator(result, 0, result.length,cl);
-        return result;
-    }
-
-    /**
-     * Method to sort.
-     *
-     * @param xs       sort the array xs, returning the sorted result, leaving xs unchanged.
-     * @param makeCopy if set to true, we make a copy first and sort that.
-     * @return the result (sorted version of xs).
-     */
-    @Override
-    public X[] sort(X[] xs, boolean makeCopy, com.ibm.icu.text.Collator cl) {
-        // CONSIDER merge with MergeSortBasic and maybe others.
-        getHelper().init(xs.length);
-        X[] result = makeCopy ? Arrays.copyOf(xs, xs.length) : xs;
-        sortIBMCollator(result, 0, result.length,cl);
-        return result;
-    }
 
     /**
      * Sort the sub-array xs[from] .. xs[to-1]
@@ -123,7 +91,7 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      * @param xs    the complete array from which this sub-array derives.
      * @param from  the index of the first element to sort.
      * @param to    the index of the first element not to sort.
-     * @param cl the collator.
+     * @param cl the java in built collator.
      */
     @Override
     public void sortBuiltInCollator(X[] xs, int from, int to, Collator cl) {
@@ -145,7 +113,7 @@ public abstract class QuickSort<X extends Comparable<X>> extends SortWithHelper<
      * @param xs    the complete array from which this sub-array derives.
      * @param from  the index of the first element to sort.
      * @param to    the index of the first element not to sort.
-     * @param cl the collator.
+     * @param cl the IBM collator.
      */
     @Override
     public void sortIBMCollator(X[] xs, int from, int to, com.ibm.icu.text.Collator cl) {

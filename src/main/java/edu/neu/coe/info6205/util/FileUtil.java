@@ -12,10 +12,18 @@ public class FileUtil {
 
     private String filepath;
 
+    /**
+     *
+     * @param filepath is the absolute/relative path to the file
+     */
     public FileUtil(String filepath) {
         this.filepath = filepath;
     }
 
+    /**
+     * Reads all the lines in a file and returns them as an array.
+     * @return
+     */
     public String[] read() {
         try(BufferedReader r = new BufferedReader(new FileReader(this.filepath))) {
             List<String>  retStringList = new ArrayList<>();
@@ -35,6 +43,11 @@ public class FileUtil {
         return null;
     }
 
+    /**
+     * Reads the specified number of lines(i.e. noOfLines) and returns them as an array.
+     * @param noOfLines
+     * @return
+     */
     public String[] read(int noOfLines) {
         int cnt=0;
         try(BufferedReader r = new BufferedReader(new FileReader(this.filepath))) {
@@ -56,18 +69,34 @@ public class FileUtil {
         return null;
     }
 
-    public void writeAsCsv(List<String> lines){
-        try {
-            String result = "";
-            for(String line: lines ){
-                result += line +"\n";
-            }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
-            writer.write(result);
-            writer.close();
-        } catch (IOException e) {
+    /**
+     * The method is used to append a string to a file.
+     * @param s
+     */
+    public void writeToFile(String s) {
+        try (BufferedWriter w = new BufferedWriter(new FileWriter(this.filepath,true))) {
+            w.write(s);
+            w.newLine();
+        }
+        catch(IOException e) {
+            System.out.println("in exception");
             e.printStackTrace();
         }
+
     }
+
+//    public void writeAsCsv(List<String> lines){
+//        try {
+//            String result = "";
+//            for(String line: lines ){
+//                result += line +"\n";
+//            }
+//            BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+//            writer.write(result);
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

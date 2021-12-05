@@ -1,6 +1,5 @@
 package edu.neu.coe.info6205.sortEssentials.huskySort;
 
-import edu.neu.coe.info6205.sortEssentials.MSDStringSort;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.ChineseCoder;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoderFactory;
 import edu.neu.coe.info6205.util.FileUtil;
@@ -24,7 +23,7 @@ public class QuickHuskySortTest {
 
         String[] expected = Arrays.copyOf(input,input.length);
         QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",HuskyCoderFactory.englishCoder,(String[] arr) ->{
-            Arrays.sort(arr,  Collator.getInstance(Locale.ENGLISH));
+            Arrays.sort(arr);
         });
         qhs.sort(input,false);
         Arrays.sort(expected);
@@ -35,10 +34,9 @@ public class QuickHuskySortTest {
     @Test
     public void testSortChineseInBuiltCollator(){
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-        String[] input = fu.read();
-        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/sortedChinese.txt");
-        String[] expected = fo.read();
-
+        String[] input = fu.read(100);
+        String[] expected = Arrays.copyOf(input,input.length);
+        Arrays.sort(expected,Collator.getInstance(Locale.CHINESE));
        try {
            QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",new ChineseCoder(Collator.getInstance(Locale.CHINESE)),(String[] arr) ->{
                Arrays.sort(arr,  Collator.getInstance(Locale.CHINESE));
@@ -55,15 +53,15 @@ public class QuickHuskySortTest {
     @Test
     public void testSortChineseIBMCollator(){
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-        String[] input = fu.read();
-        FileUtil fo = new FileUtil("src/main/SortedString/Chinese/IBMsortedChinese.txt");
-        String[] expected = fo.read();
+        String[] input = fu.read(100);
+        String[] expected = Arrays.copyOf(input,input.length);
+        Arrays.sort(expected,com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
         try {
             QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",new ChineseCoder(com.ibm.icu.text.Collator.getInstance(Locale.CHINESE)),(String[] arr) ->{
                 Arrays.sort(arr,  com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
             });
             qhs.preSort(input, false);
-            //qhs.sort(input, 0, input.length);
+            qhs.sort(input, 0, input.length);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package edu.neu.coe.info6205.sortEssentials;
 
 
 import java.text.Collator;
+import java.util.Comparator;
 import java.util.Random;
 
 public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
@@ -19,13 +20,6 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * @return false
-     */
-    public boolean instrumented() {
-        return false;
     }
 
     /**
@@ -62,6 +56,7 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
         return cl.compare(xs[i],xs[j]);
     }
 
+
     /**
      * Compare v and w
      *
@@ -74,37 +69,16 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
         return v.compareTo(w);
     }
 
-//    /**
-//     * Swap the elements of array a at indices i and j.
-//     *
-//     * @param xs the array.
-//     * @param i  one of the indices.
-//     * @param j  the other index.
-//     */
-//    public void swap(X[] xs, int i, int j) {
-//        X temp = xs[i];
-//        xs[i] = xs[j];
-//        xs[j] = temp;
-//    }
-
-    /**
-     * Method to perform a stable swap using half-exchanges,
-     * i.e. between xs[i] and xs[j] such that xs[j] is moved to index i,
-     * and xs[i] thru xs[j-1] are all moved up one.
-     * This type of swap is used by insertion sort.
-     *
-     * @param xs the array of Xs.
-     * @param i  the index of the destination of xs[j].
-     * @param j  the index of the right-most element to be involved in the swap.
-     */
     @Override
-    public void swapInto(X[] xs, int i, int j) {
-        if (j > i) {
-            X x = xs[j];
-            System.arraycopy(xs, i, xs, i + 1, j - i);
-            xs[i] = x;
-        }
+    public int compare(X v, X w, Collator cl) {
+        return cl.compare(v,w);
     }
+
+    @Override
+    public int compare(X v, X w, com.ibm.icu.text.Collator cl) {
+        return cl.compare(v,w);
+    }
+
 
     public boolean sorted(X[] xs) {
         for (int i = 1; i < xs.length; i++) if (xs[i - 1].compareTo(xs[i]) > 0) return false;
@@ -118,12 +92,6 @@ public class BaseHelper<X extends Comparable<X>> implements Helper<X> {
                 if (xs[i].compareTo(xs[j]) > 0) result++;
         return result;
     }
-
-//    public X[] random(Class<X> clazz, Function<Random, X> f) {
-//        if (n <= 0) throw new HelperException("Helper.random: not initialized");
-//        randomArray = Utilities.fillRandomArray(clazz, random, n, f);
-//        return randomArray;
-//    }
 
     /**
      * Method to post-process the array xs after sorting.

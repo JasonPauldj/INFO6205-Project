@@ -104,29 +104,6 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
         return helper.swapStableConditional(xs, i);
     }
 
-    /**
-     * Method to perform a stable swap using half-exchanges, and binary search.
-     * i.e. x[i] is moved leftwards to its proper place and all elements from
-     * the destination of x[i] thru x[i-1] are moved up one place.
-     * This type of swap is used by insertion sort.
-     *
-     * @param xs the array of X elements, whose elements 0 thru i-1 MUST be sorted.
-     * @param i  the index of the element to be swapped into the ordered array xs[0..i-1].
-     */
-    @Override
-    public void swapIntoSorted(X[] xs, int i) {
-        helper.swapIntoSorted(xs, i);
-    }
-
-    /**
-     * Get the cutoff value.
-     *
-     * @return the cutoff value.
-     */
-    @Override
-    public int cutoff() {
-        return helper.cutoff();
-    }
 
     /**
      * Method to do any required preProcessing.
@@ -215,6 +192,16 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
         return helper.compare(v, w);
     }
 
+    @Override
+    public int compare(X v, X w, Collator cl) {
+        return helper.compare(v,w,cl);
+    }
+
+    @Override
+    public int compare(X v, X w, com.ibm.icu.text.Collator cl) {
+        return helper.compare(v,w,cl);
+    }
+
     // CONSIDER having a method less which compares the longs rather than having direct access to the longs array in sub-classes
     public void swap(X[] xs, int i, int j) {
         long[] longs = coding.longs;
@@ -237,19 +224,25 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
     }
 
     /**
-     * Method to perform a stable swap using half-exchanges,
-     * i.e. between xs[i] and xs[j] such that xs[j] is moved to index i,
-     * and xs[i] thru xs[j-1] are all moved up one.
-     * This type of swap is used by insertion sort.
+     * Method to perform a stable swap, i.e. between xs[i] and xs[i-1] using inbuilt collator.
      *
-     * @param xs the array of Xs.
-     * @param i  the index of the destination of xs[j].
-     * @param j  the index of the right-most element to be involved in the swap.
+     * @param xs the array of Y elements.
+     * @param i  the index of the higher of the adjacent elements to be swapped.
      */
-    @Override
-    public void swapInto(X[] xs, int i, int j) {
-        helper.swapInto(xs, i, j);
+    public void swapStable(X[] xs, int i, Collator cl) {
+        helper.swapStableConditional(xs, i,cl);
     }
+
+    /**
+     * Method to perform a stable swap, i.e. between xs[i] and xs[i-1] using IBM collator
+     *
+     * @param xs the array of Y elements.
+     * @param i  the index of the higher of the adjacent elements to be swapped.
+     */
+    public void swapStable(X[] xs, int i, com.ibm.icu.text.Collator cl) {
+        helper.swapStableConditional(xs, i,cl);
+    }
+
 
     /**
      * Copy the element at source[j] into target[i]
@@ -332,11 +325,8 @@ public class HuskyHelper<X extends Comparable<X>> implements Helper<X> {
     }
 
     protected final Helper<X> helper;
-
-    // Delegate methods on helper
     private final HuskyCoder<X> coder;
     private final Consumer<X[]> postSorter;
     private final boolean makeCopy;
-
     private Coding coding;
 }

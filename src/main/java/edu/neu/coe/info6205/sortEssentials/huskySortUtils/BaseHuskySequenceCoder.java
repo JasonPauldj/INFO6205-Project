@@ -1,6 +1,5 @@
 package edu.neu.coe.info6205.sortEssentials.huskySortUtils;
 
-import com.ibm.icu.text.CollationKey;
 
 import java.text.Collator;
 
@@ -59,7 +58,7 @@ public abstract class BaseHuskySequenceCoder<X extends CharSequence> implements 
      * Encode an array of Xs.
      *
      * @param xs an array of X elements.
-     * @return an array of longs corresponding to the the Husky codes of the X elements.
+     * @return an array of longs corresponding to the Husky codes of the X elements.
      */
     @Override
     final public Coding huskyEncode(final X[] xs) {

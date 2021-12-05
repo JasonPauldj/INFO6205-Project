@@ -3,6 +3,8 @@
  */
 package edu.neu.coe.info6205.sortEssentials.huskySortUtils;
 
+import java.text.Collator;
+
 /**
  * This interface models the essence of the Husky Sort mechanism.
  * Elements in a collection are encoded using the huskyEncode method.
@@ -52,5 +54,21 @@ public interface HuskyCoder<X> {
      */
     default boolean perfect() {
         return false;
+    }
+
+    default boolean usingInBuiltCollator(){
+        return false;
+    }
+
+    default boolean usingIBMCollator(){
+        return false;
+    }
+
+    default Collator getInBuiltCollator(){
+        return null;
+    }
+
+    default com.ibm.icu.text.Collator getIBMCollator(){
+        return null;
     }
 }

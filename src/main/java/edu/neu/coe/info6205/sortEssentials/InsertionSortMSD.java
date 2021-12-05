@@ -28,8 +28,15 @@ public class InsertionSortMSD {
     private static boolean less(String v, String w, int d, Collator cl) {
         if (cl == null)
             return v.substring(d).compareTo(w.substring(d)) < 0;
-        else
-            return cl.compare(v.substring(d),w.substring(d)) < 0;
+        else {
+            if(v.length()<d && w.length()<d)
+                return false;
+            if(v.length()<d && !(w.length()<d))
+                return true;
+            if(w.length()<d && !(v.length()<d))
+                return false;
+            return cl.compare(v.substring(d), w.substring(d)) < 0;
+        }
     }
 
     public static void sort(String[] a, int lo, int hi, int d, com.ibm.icu.text.Collator cl) {
@@ -41,8 +48,15 @@ public class InsertionSortMSD {
     private static boolean less(String v, String w, int d, com.ibm.icu.text.Collator cl) {
         if (cl == null)
             return v.substring(d).compareTo(w.substring(d)) < 0;
-        else
-            return cl.compare(v.substring(d),w.substring(d)) < 0;
+        else {
+            if(v.length()<d && w.length()<d)
+                return false;
+            if(v.length()<d && !(w.length()<d))
+                return true;
+            if(w.length()<d && !(v.length()<d))
+                return false;
+            return cl.compare(v.substring(d), w.substring(d)) < 0;
+        }
     }
 
     private static void swap(Object[] a, int j, int i) {

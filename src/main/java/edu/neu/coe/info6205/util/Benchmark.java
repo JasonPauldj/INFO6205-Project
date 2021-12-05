@@ -45,8 +45,7 @@ public class Benchmark<T> {
      * @return the average number of milliseconds taken for each run of function f.
      */
     public double run(final Supplier<T> supplier, final int m) {
-        //logger.info("Begin run: " + description + " with " + formatWhole(m) + " runs");
-        // Warmup phase
+
         final Function<T, T> function = t -> {
             fRun.accept(t);
             return t;
