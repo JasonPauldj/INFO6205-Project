@@ -31,11 +31,12 @@
 -   Encounter an examined character: We increment the count by 1 for the character in the TreeMap.
     
 
->The values in the treep map now represent the starting index of the character in the auxiliary array.
+>The value of a key(character) in the tree map now represents the count of the strings having that character at position d.
 
 -   Transform - The second step is to transform the counts to useful indices. We leverage the fact that keys(i.e characters in our case) are stored in an orderly way in our TreeMap. We iteratively compute the sum of counts of all keys that come before a key ‘k’ and store it as the value for the key. The values in the treep map now represent the starting index of the character in the auxiliary array.
     
--   Distribute - Now that we have the starting indices, distributing the strings in an auxiliary array works similar to how normal MSD works with a count array.
+-   Distribute - Now that we have the starting indices, distributing the strings in an auxiliary array works similar to how normal MSD works with a count array. We keep incrementing the value whenever the key is encountered while distributing.
+The values in the tree map now represent the starting index of the succeeding character in the auxiliary array.
 
 > The main differences between this implementation and the general implementation of MSD sort
     
