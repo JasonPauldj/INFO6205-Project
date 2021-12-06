@@ -97,11 +97,12 @@ public class MSDStringSortCollator {
 
 
 
-            // int hiInd;
+
             if (keySet.get(0) != "-1") {
                 sort(a, lo, lo + map.get(keySet.get(0)), d + 1, cl);
 
                 //UNSTABLE SORT.
+                // int hiInd;
                 // hiInd=(keySet.size()==1) ? hi : lo+map.get(keySet.get(1));
                 // sort(a, lo + map.get(keySet.get(0)), hiInd, d + 1, cl);
 
@@ -111,6 +112,7 @@ public class MSDStringSortCollator {
                 sort(a, lo + map.get(keySet.get(r - 1)), lo + map.get(keySet.get(r)), d + 1, cl);
 
                 //UNSTABlE SORT
+                // int hiInd;
                 // hiInd = (r == keySet.size() - 1) ? hi : lo + map.get(keySet.get(r + 1));
                 // sort(a, lo + map.get(keySet.get(r)), hiInd, d + 1, cl);
             }
@@ -129,9 +131,9 @@ public class MSDStringSortCollator {
      * @param cl the java IBM collator
      */
     private static void sort(String[] a, int lo, int hi, int d, com.ibm.icu.text.Collator cl) {
-//        if (hi <= lo + cutoff)
-//            InsertionSortMSD.sort(a, lo, hi, d, cl);
-//        else
+        if (hi <= lo + cutoff)
+            InsertionSortMSD.sort(a, lo, hi, d, cl);
+        else
            {
             if (lo >= hi - 1)
                 return;

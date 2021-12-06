@@ -14,9 +14,6 @@ import static org.junit.Assert.*;
 
 public class MSDStringSortCollatorTest {
 
-//    String[] input = "she sells seashells by the seashore the shells she sells are surely seashells".split(" ");
-//    String[] expected = "are by seashells seashells seashore sells sells she she shells surely the the".split(" ");
-
 
     @Test
     public void sortRandom() {
@@ -26,10 +23,8 @@ public class MSDStringSortCollatorTest {
             int val = random.nextInt(300);
             input[i] = val + "a";
         }
-        System.out.println("Input " + Arrays.toString(input));
         String[] expected = Arrays.copyOf(input,input.length);
         Arrays.sort(expected);
-        System.out.println("Expected " + Arrays.toString(expected));
         new MSDStringSortCollator().sort(input,Collator.getInstance(Locale.ENGLISH));
         assertArrayEquals(expected, input);
     }
@@ -86,5 +81,15 @@ public class MSDStringSortCollatorTest {
 //        msd.sort(input, com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
 //
 //        assertArrayEquals(expected,input);
+//    }
+
+//    @Ignore
+//    @Test
+//    public void testSortError(){
+//        com.ibm.icu.text.Collator col = com.ibm.icu.text.Collator.getInstance(Locale.CHINESE);
+//        assertEquals(col.compare("陈崇","陈重庆"),1);
+//        assertEquals(col.compare("陈","陈"),0);
+//        // for some reason the IBM Collator returns -1 instead of 1 while comparing individual characters
+//        assertEquals(col.compare("崇","重"),1);
 //    }
 }

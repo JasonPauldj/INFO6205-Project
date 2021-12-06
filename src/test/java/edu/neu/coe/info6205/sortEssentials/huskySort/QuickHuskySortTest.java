@@ -19,13 +19,13 @@ public class QuickHuskySortTest {
 
         FileUtil fu= new FileUtil("src/main/RandomString/English/randomstrings.txt");
         String[] input = fu.read(100);
-
-
         String[] expected = Arrays.copyOf(input,input.length);
+
         QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",HuskyCoderFactory.englishCoder,(String[] arr) ->{
             Arrays.sort(arr);
         });
         qhs.sort(input,false);
+
         Arrays.sort(expected);
         assertArrayEquals(expected, input);
     }
@@ -36,17 +36,15 @@ public class QuickHuskySortTest {
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
         String[] input = fu.read(100);
         String[] expected = Arrays.copyOf(input,input.length);
-        Arrays.sort(expected,Collator.getInstance(Locale.CHINESE));
-       try {
+
+
            QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",new ChineseCoder(Collator.getInstance(Locale.CHINESE)),(String[] arr) ->{
                Arrays.sort(arr,  Collator.getInstance(Locale.CHINESE));
            });
            qhs.sort(input, false);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+        Arrays.sort(expected,Collator.getInstance(Locale.CHINESE));
         assertArrayEquals(expected,input);
     }
 
@@ -55,18 +53,14 @@ public class QuickHuskySortTest {
         FileUtil fu= new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
         String[] input = fu.read(100);
         String[] expected = Arrays.copyOf(input,input.length);
-        Arrays.sort(expected,com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
-        try {
+
+
             QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort",new ChineseCoder(com.ibm.icu.text.Collator.getInstance(Locale.CHINESE)),(String[] arr) ->{
                 Arrays.sort(arr,  com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
             });
-            qhs.preSort(input, false);
-            qhs.sort(input, 0, input.length);
+        qhs.sort(input, false);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        Arrays.sort(expected,com.ibm.icu.text.Collator.getInstance(Locale.CHINESE));
         assertArrayEquals(expected,input);
     }
 }

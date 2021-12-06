@@ -3,12 +3,8 @@ package edu.neu.coe.info6205.sortEssentials.huskySort;
 import edu.neu.coe.info6205.sortEssentials.elementary.InsertionSort;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.Coding;
 import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoder;
-import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskyCoderFactory;
-import edu.neu.coe.info6205.sortEssentials.huskySortUtils.HuskySortHelper;
-import edu.neu.coe.info6205.sortEssentials.elementary.InsertionSort;
 import edu.neu.coe.info6205.util.LazyLogger;
 
-import java.text.Collator;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -47,8 +43,7 @@ public class PureHuskySort<X extends Comparable<X>> {
                 Arrays.sort(xs, huskyCoder.getInBuiltCollator());
             else if (huskyCoder.usingIBMCollator())
                 Arrays.sort(xs, huskyCoder.getIBMCollator());
-            else
-                Arrays.sort(xs);
+            else Arrays.sort(xs);
         }
     }
 

@@ -44,7 +44,7 @@ public class LSDStringSortCollator {
             charMap.put(key, charMap.get(key) + 1);
         }
 
-        //System.out.println(charMap);
+
 
         List<String> keySet = new ArrayList<>(charMap.keySet());
 
@@ -151,7 +151,6 @@ public class LSDStringSortCollator {
         int maxLength = findMaxLength(strArr);
         for (int i = maxLength - 1; i >= 0; i--) {
             charSort(strArr, i, from, to, cl);
-            int a = 10;
         }
 
     }

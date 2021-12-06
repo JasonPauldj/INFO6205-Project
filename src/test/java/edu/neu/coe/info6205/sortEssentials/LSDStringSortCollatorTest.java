@@ -16,15 +16,13 @@ public class LSDStringSortCollatorTest {
     @Test
     public void sortRandom() {
         Random random = new Random();
-        String[] input = new String[20];
+       String[] input = new String[20];
         for( int i = 0 ; i < 20 ; i++){
             int val = random.nextInt(300);
-            input[i] = val + "a";
+            input[i] = val+"a";
         }
-        System.out.println("Input " + Arrays.toString(input));
         String[] expected = Arrays.copyOf(input,input.length);
         Arrays.sort(expected);
-        System.out.println("Expected " + Arrays.toString(expected));
         new LSDStringSortCollator().sort(input,Collator.getInstance(Locale.ENGLISH));
         assertArrayEquals(expected, input);
     }
@@ -35,10 +33,7 @@ public class LSDStringSortCollatorTest {
         String[] input =  "阿兵 阿安 阿冰冰 阿斌 阿滨 阿冰 阿彬".split(" ");
         String[] expected = "阿安 阿彬 阿斌 阿滨 阿兵 阿冰 阿冰冰".split(" ");
 
-        System.out.println(Arrays.toString(input));
         new LSDStringSortCollator().sort(input, Collator.getInstance(Locale.CHINESE));
-        System.out.println("Sorted Array " + Arrays.toString(input));
-        System.out.println("Expected Array " + Arrays.toString(expected));
         assertArrayEquals(expected, input);
     }
 

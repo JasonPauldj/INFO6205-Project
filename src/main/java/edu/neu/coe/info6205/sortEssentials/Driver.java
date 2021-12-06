@@ -22,45 +22,12 @@ public class Driver {
     static ChineseCoder chineseInBuiltCoder = new ChineseCoder(chineseInBuiltCollator);
 
     public static void main(String[] args) {
-
-        //PURE HUSKY SORT CHINESE
-        benchMarkAnySort("Pure Husky Sort", (String[] array) -> {
-            PureHuskySort<String> phs = new PureHuskySort<>(chineseInBuiltCoder, false, false);
-            String[] copy = Arrays.copyOf(array, array.length);
-            phs.sort(copy);
-        }, Language.CHINESE);
-
-        //LSD SORT CHINESE
-        benchMarkAnySort("LSD Sort", (String[] array) -> {
-
-            LSDStringSortCollator lsd = new LSDStringSortCollator();
-            String[] copy = Arrays.copyOf(array, array.length);
-            lsd.sort(copy,chineseInBuiltCollator);
-
-        }, Language.CHINESE);
-
-//        if (args[0].equals("1")) {
-//            populateClassList(classList,null);
-//            String[] array = getDataToSort(1);
-//            List<String> result = new ArrayList<String>();
-//            for (int i = 0; i < descs.length; i++) {
-//                int pos = i;
-//                result.add(benchMarkAnySort(descs[i], array, classList.get(i)));
-//            }
-//            writeDataToSort(result, 1);
-//        }
-//        if (args[0].equals("2") || args[1].equals("2")) {
-//            populateClassList(classList,Collator.getInstance(Locale.CHINA));
-//            String[] array = getDataToSort(2);
-//            List<String> result = new ArrayList<String>();
-//            for (int i = 0; i < descs.length; i++) {
-//                int pos = i;
-//                result.add(benchMarkAnySort(descs[i], array, classList.get(i)));
-//            }
-//            writeDataToSort(result, 2);
-//        }
+       benchMarkEnglish();
+       benchMarkChinese();
     }
-
+    /**
+     * This method currently runs the benchmark for sorting methods on english strings.
+     */
     private static void benchMarkEnglish(){
         //QUICK SORT ENGLISH
         benchMarkAnySort("Quick Sort Dual Pivot", (String[] array) -> {
@@ -116,6 +83,10 @@ public class Driver {
         }, Language.ENGLISH);
     }
 
+    /**
+     * This method currently runs the benchmark for sorting methods on chinese strings and only with java.text.Collator.
+     * Change Collator to com.ibm.icu.text.Collator if you want to obtain benchmarking for IBM Collator.
+     */
     private static void benchMarkChinese(){
         //QUICK SORT CHINESE
         benchMarkAnySort("Quick Sort Dual Pivot", (String[] array) -> {
@@ -172,28 +143,13 @@ public class Driver {
         }, Language.CHINESE);
 
     }
-//    private static void writeDataToSort(List<String> lines, int i) {
-//        if (i == 1) {
-//            FileUtil fileUtil = new FileUtil("src/main/RandomString/English/EnglishResults.txt");
-//            fileUtil.writeAsCsv(lines);
-//        } else if (i == 2) {
-//            FileUtil fileUtil = new FileUtil("src/main/RandomString/Chinese/newSortedChinese.txt");
-//            fileUtil.writeAsCsv(lines);
-//        }
-//    }
 
-    private static String[] getDataToSort(int i) {
-        String[] array = null;
-        if (i == 1) {
-            FileUtil fileUtil = new FileUtil("src/main/RandomString/English/EnglistRandomString1M.txt");
-            array = fileUtil.read();
-        } else if (i == 2) {
-            FileUtil fileUtil = new FileUtil("src/main/RandomString/Chinese/shuffledChinese.txt");
-            array = fileUtil.read();
-        }
-        return array;
-    }
-
+    /**
+     * This method reads the input from shuffledChinese.txt or randomstrings.txt for chinese and english respectively.
+     * @param lang the language to sort
+     * @param cntOfWords the size of the array to be returned. max can be only 4_000_000
+     * @return an array of cntOfWords no of strings
+     */
     private static String[] getDataToSort(Language lang, int cntOfWords) {
         String[] array = null;
         StringBuilder filePath = new StringBuilder("src/main/RandomString/");
@@ -213,42 +169,18 @@ public class Driver {
         return array;
     }
 
-    private static void populateClassList(List<Consumer<String[]>> classList, Collator cl) {
-        classList.add((String[] arr) -> {
-            try {
-                if (cl == null)
-                    new TimSort<String>().sort(arr, 0, arr.length);
-                else
-                    new TimSort<String>().sortBuiltInCollator(arr, 0, arr.length, cl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        classList.add((String[] arr) -> {
-            if (cl != null)
-                new QuickSort_DualPivot<String>(arr.length).sort(arr, false, cl);
-            else
-                new QuickSort_DualPivot<String>(arr.length).sort(arr, false);
-        });
-        classList.add((String[] arr) -> {
-            try {
-                QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort", chineseIBMCoder, (String[] array) -> {
-                    Arrays.sort(arr, chineseIBMCollator);
-                });
-                qhs.sort(arr, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        classList.add((String[] arr) -> {
-            new LSDStringSort().sort(arr);
-        });
-    }
-
+    /**
+     * This method takes a sorting method and times it varying sizes of input and writes the measured times to a file under Results.
+     * The benchmarking starts from an array size of 15625 and goes till 4 million.
+     * The array size is doubled each time.
+     * @param desc a simple description of the sort method being benchmarked
+     * @param sortFunction the sorting method that needs to be timed.
+     * @param lang the language either Chinese or English.
+     */
     public static void benchMarkAnySort(String desc, Consumer<String[]> sortFunction, Language lang) {
 
         Benchmark<String[]> bm = new Benchmark<String[]>(desc, sortFunction);
-        FileUtil fileUtil = new FileUtil("src/main/Results/Results.txt");
+        FileUtil fileUtil = new FileUtil("src/main/Results/Results1.txt");
 
         int[] cntOfWords = new int[9];
         cntOfWords[0] = 15625;
@@ -258,70 +190,13 @@ public class Driver {
 
         for (int arraySize : cntOfWords) {
             String[] array = getDataToSort(lang, arraySize);
-            double avgTime = bm.run(array, 5);
+            double avgTime = bm.run(array, 100);
             fileUtil.writeToFile(desc + " took " + avgTime + " ms to sort " + arraySize + " " + lang.getLanguage()+ " strings");
             System.out.println(desc + " took " + avgTime + " time to sort " + arraySize + " " + lang.getLanguage()+ " strings");
         }
         System.out.println();
     }
 
-    public static void benchmarkQuickSort() {
-        Benchmark<String[]> bm = new Benchmark<String[]>("benchmarking quick sort",
-                (String[] array) -> {
-                    try {
-                        QuickSort_DualPivot qs = new QuickSort_DualPivot<String>("Quick Sort", array.length);
-                        array = (String[]) qs.sort(array, true, com.ibm.icu.text.Collator.getInstance(Locale.CHINA));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
 
-        String[] array = getDataToSort(2);
-
-        double d = bm.run(array, 1);
-        System.out.println(d);
-        FileUtil fileUtil = new FileUtil("src/main/RandomString/Chinese/sortedChinese.txt");
-        String[] in = fileUtil.read();
-//        String[] res = qs.sort()
-        System.out.println(Arrays.equals(array, in));
-
-    }
-
-    public static void benchmarkTimSort() {
-        Benchmark<String[]> bm = new Benchmark<String[]>("benchmarking tim sort",
-                (String[] array) -> {
-                    try {
-                        new TimSort<String>().sort(array, true, chineseIBMCollator);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-        String[] array = getDataToSort(2);
-
-        double d = bm.run(array, 10);
-        System.out.println(d);
-//        FileUtil fileUtil = new FileUtil("src/main/RandomString/Chinese/sortedChinese.txt");
-//        String[] in = fileUtil.read();
-//        System.out.println(Arrays.equals(array,in));
-    }
-
-    public static void benchmarkHuskySort() {
-        Benchmark<String[]> bm = new Benchmark<String[]>("benchmarking tim sort",
-                (String[] array) -> {
-                    try {
-                        QuickHuskySort qhs = new QuickHuskySort<String>("Quick Husky Sort", chineseIBMCoder, (String[] arr) -> {
-                            Arrays.sort(arr, chineseIBMCollator);
-                        });
-                        qhs.sort(array, true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
-        String[] array = getDataToSort(2);
-
-        double d = bm.run(array, 10);
-        System.out.println(d);
-    }
 
 }

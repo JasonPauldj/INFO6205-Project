@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class InsertionSortMSDTest {
 
     @Test
-    public void sort0() {
+    public void sortChar0() {
         String[] input = "she sells seashells by the seashore the shells she sells are surely seashells".split(" ");
         String[] expected = "are by seashells seashells seashore sells sells she she shells surely the the".split(" ");
 
@@ -23,7 +23,7 @@ public class InsertionSortMSDTest {
     }
 
     @Test
-    public void sort1() {
+    public void sortChar1() {
         String[] input = "she sells seashells seashore shells she sells surely seashells".split(" ");
         String[] expected = "seashells seashells seashore sells sells she she shells surely".split(" ");
 

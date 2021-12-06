@@ -22,9 +22,7 @@ public class MSDStringSortTest {
         }
         String[] expected = Arrays.copyOf(input,input.length);
         new MSDStringSort().sort(input);
-        System.out.println("Sorted Array " + Arrays.toString(input));
         Arrays.sort(expected);
-        System.out.println("Expected Array " + Arrays.toString(expected));
         assertArrayEquals(expected, input);
     }
 

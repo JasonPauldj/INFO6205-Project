@@ -7,6 +7,7 @@ Quick Sort Dual Pivot took 123.40159116000001 time to sort 250000 strings
 Quick Sort Dual Pivot took 308.92909941 time to sort 500000 strings
 Quick Sort Dual Pivot took 744.9933485299999 time to sort 1000000 strings
 Quick Sort Dual Pivot took 720.1873312499999 time to sort 2000000 strings
+Quick Sort Dual Pivot took 747.302311 ms to sort 4000000 en strings
 Tim Sort took 5.7700805200000005 time to sort 15625 strings
 Tim Sort took 8.81633191 time to sort 31250 strings
 Tim Sort took 20.63617085 time to sort 62500 strings
@@ -15,6 +16,7 @@ Tim Sort took 118.15968065999999 time to sort 250000 strings
 Tim Sort took 263.48641986 time to sort 500000 strings
 Tim Sort took 621.8781506500001 time to sort 1000000 strings
 Tim Sort took 631.22042511 time to sort 2000000 strings
+Tim Sort took 630.90115 ms to sort 4000000 en strings
 Quick Husky Sort took 3.2527929799999997 time to sort 15625 strings
 Quick Husky Sort took 6.780855249999999 time to sort 31250 strings
 Quick Husky Sort took 17.88101981 time to sort 62500 strings
@@ -23,6 +25,7 @@ Quick Husky Sort took 115.02488543 time to sort 250000 strings
 Quick Husky Sort took 270.96465312 time to sort 500000 strings
 Quick Husky Sort took 594.88593016 time to sort 1000000 strings
 Quick Husky Sort took 585.08486512 time to sort 2000000 strings
+Quick Husky Sort took 556.2273393333334 to sort 4000000 en strings
 LSD Sort took 1.6005736 time to sort 15625 strings
 LSD Sort took 3.81122032 time to sort 31250 strings
 LSD Sort took 18.763840520000002 time to sort 62500 strings
@@ -31,6 +34,7 @@ LSD Sort took 342.49349355 time to sort 250000 strings
 LSD Sort took 903.5052577399999 time to sort 500000 strings
 LSD Sort took 2008.75669275 time to sort 1000000 strings
 LSD Sort took 1873.59196245 time to sort 2000000 strings
+LSD Sort took 2101.7796613333335 ms to sort 4000000 en strings
 MSD Sort took 1.59684114 time to sort 15625 strings
 MSD Sort took 3.05648162 time to sort 31250 strings
 MSD Sort took 8.33072188 time to sort 62500 strings
@@ -39,6 +43,7 @@ MSD Sort took 56.25233763 time to sort 250000 strings
 MSD Sort took 118.14034955 time to sort 500000 strings
 MSD Sort took 318.86713354 time to sort 1000000 strings
 MSD Sort took 288.06264125 time to sort 2000000 strings
+MSD Sort took 323.7129713333333 ms to sort 4000000 en strings
 Pure Husky Sort took 2.77954125 time to sort 15625 strings
 Pure Husky Sort took 6.18640021 time to sort 31250 strings
 Pure Husky Sort took 11.638936309999998 time to sort 62500 strings
@@ -47,6 +52,7 @@ Pure Husky Sort took 89.44368037 time to sort 250000 strings
 Pure Husky Sort took 182.32118578 time to sort 500000 strings
 Pure Husky Sort took 440.11936857 time to sort 1000000 strings
 Pure Husky Sort took 464.33426073000004 time to sort 2000000 strings
+Pure Husky Sort took 389.64524766666665 ms to sort 4000000 en strings
 
 /**** CHINESE STRINGS ****/
 
@@ -73,6 +79,10 @@ Quick Husky Sort took 84.569402 ms to sort 31250 ch strings
 Quick Husky Sort took 180.3907964 ms to sort 62500 ch strings
 Quick Husky Sort took 385.8999837 ms to sort 125000 ch strings
 Quick Husky Sort took 861.82137905 ms to sort 250000 ch strings
+Quick Husky Sort took 2035.3322464 ms to sort 500000 ch strings
+Quick Husky Sort took 4439.0515918 ms to sort 1000000 ch strings
+Quick Husky Sort took 9641.259589 ms to sort 2000000 ch strings
+Quick Husky Sort took 21908.816780200003 ms to sort 4000000 ch strings
 MSD Sort took 1084.2341903333333 ms to sort 15625 ch strings
 MSD Sort took 2135.1531486666668 ms to sort 31250 ch strings
 MSD Sort took 4476.656293333333 ms to sort 62500 ch strings
@@ -82,11 +92,6 @@ MSD Sort took 18047.102250333333 ms to sort 500000 ch strings
 MSD Sort took 40585.05737466667 ms to sort 1000000 ch strings
 MSD Sort took 69643.906693 ms to sort 2000000 ch strings
 MSD Sort took 135062.785755 ms to sort 4000000 ch strings
-Quick Husky Sort took 2035.3322464 ms to sort 500000 ch strings
-Quick Husky Sort took 4439.0515918 ms to sort 1000000 ch strings
-Quick Husky Sort took 9641.259589 ms to sort 2000000 ch strings
-Quick Husky Sort took 21908.816780200003 ms to sort 4000000 ch strings
-
 Pure Husky Sort took 132.4269146 ms to sort 15625 ch strings
 Pure Husky Sort took 169.04979020000002 ms to sort 31250 ch strings
 Pure Husky Sort took 216.04414820000002 ms to sort 62500 ch strings
@@ -105,7 +110,21 @@ LSD Sort took 20494.3893424 ms to sort 500000 ch strings
 LSD Sort took 41230.3507392 ms to sort 1000000 ch strings
 LSD Sort took 83919.6739904 ms to sort 2000000 ch strings
 LSD Sort took 169679.0613812 ms to sort 4000000 ch strings
-Pure Husky Sort took 206.8780298 ms to sort 15625 ch strings
-Pure Husky Sort took 183.53694760000002 ms to sort 31250 ch strings
-Pure Husky Sort took 223.89633480000003 ms to sort 62500 ch strings
-Pure Husky Sort took 579.9105878 ms to sort 125000 ch strings
+Quick Husky Sort with Byte Array Encoding took 46.133588200000005 ms to sort 15625 ch strings
+Quick Husky Sort with Byte Array Encoding took 90.2823946 ms to sort 31250 ch strings
+Quick Husky Sort with Byte Array Encoding took 151.7757744 ms to sort 62500 ch strings
+Quick Husky Sort with Byte Array Encoding took 244.8494176 ms to sort 125000 ch strings
+Quick Husky Sort with Byte Array Encoding took 441.83463700000004 ms to sort 250000 ch strings
+Quick Husky Sort with Byte Array Encoding took 892.5900984 ms to sort 500000 ch strings
+Quick Husky Sort with Byte Array Encoding took 1961.2923358 ms to sort 1000000 ch strings
+Quick Husky Sort with Byte Array Encoding took 3897.0959995999997 ms to sort 2000000 ch strings
+Quick Husky Sort with Byte Array Encoding took 8191.511835200001 ms to sort 4000000 ch strings
+Pure Husky Sort with Byte Array Encoding took 25.4672796 ms to sort 15625 ch strings
+Pure Husky Sort with Byte Array Encoding took 48.196931 ms to sort 31250 ch strings
+Pure Husky Sort with Byte Array Encoding took 92.2576956 ms to sort 62500 ch strings
+Pure Husky Sort with Byte Array Encoding took 199.2935768 ms to sort 125000 ch strings
+Pure Husky Sort with Byte Array Encoding took 401.024247 ms to sort 250000 ch strings
+Pure Husky Sort with Byte Array Encoding took 860.394988 ms to sort 500000 ch strings
+Pure Husky Sort with Byte Array Encoding took 1786.3054 ms to sort 1000000 ch strings
+Pure Husky Sort with Byte Array Encoding took 3679.096701 ms to sort 2000000 ch strings
+Pure Husky Sort with Byte Array Encoding took 7810.3989329999995 ms to sort 4000000 ch strings

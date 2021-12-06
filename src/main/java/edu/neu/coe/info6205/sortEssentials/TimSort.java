@@ -45,6 +45,8 @@ public class TimSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
     @Override
     public void sortBuiltInCollator(X[] xs, int from, int to, Collator cl) {
+           //Benchmark<X[]> bm_timSort = new Benchmark<X[]>("timing tim sort",(X[] arr) -> Arrays.sort(arr,from,to,cl));
+          //System.out.println("Time taken for tim sort "+ bm_timSort.run(xs,1));
         Arrays.sort(xs, from, to, cl);
     }
 
